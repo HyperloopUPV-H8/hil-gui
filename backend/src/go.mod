@@ -1,10 +1,10 @@
-module test-control-backend-client
+module github.com/HyperloopUPV-H8/hil-gui/backend
 
 go 1.19
 
 require (
-	github.com/aquilax/go-perlin v1.1.0
 	github.com/gorilla/websocket v1.5.0
+	github.com/pelletier/go-toml/v2 v2.0.8
 	github.com/rs/zerolog v1.29.1
 )
 

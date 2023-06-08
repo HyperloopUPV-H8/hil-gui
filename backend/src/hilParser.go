@@ -3,8 +3,9 @@ package main
 import (
 	"encoding/binary"
 	"errors"
-	"main/conversions"
-	"main/models"
+
+	"github.com/HyperloopUPV-H8/hil-gui/backend/conversions"
+	"github.com/HyperloopUPV-H8/hil-gui/backend/models"
 
 	trace "github.com/rs/zerolog/log"
 )

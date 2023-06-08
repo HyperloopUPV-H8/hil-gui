@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"main/models"
 	"math"
+
+	"github.com/HyperloopUPV-H8/hil-gui/backend/models"
 
 	trace "github.com/rs/zerolog/log"
 )

@@ -6,10 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"main/conversions"
-	"main/models"
 	"strings"
 	"time"
+
+	"github.com/HyperloopUPV-H8/hil-gui/backend/models"
+
+	"github.com/HyperloopUPV-H8/hil-gui/backend/conversions"
 
 	"github.com/gorilla/websocket"
 	trace "github.com/rs/zerolog/log"

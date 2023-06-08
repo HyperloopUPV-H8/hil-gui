@@ -1,7 +1,7 @@
 package conversions
 
 import (
-	"main/models"
+	"github.com/HyperloopUPV-H8/hil-gui/backend/models"
 	"reflect"
 	"testing"
 )
