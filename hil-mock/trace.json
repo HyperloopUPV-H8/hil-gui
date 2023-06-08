@@ -1,14 +1,1 @@
-{"level":"info","time":1686162918824040300,"caller":"hilMock.go:30","message":"IDLE"}
-{"level":"info","time":1686162921579049800,"caller":"hilMock.go:75","message":"Simulation state"}
-{"level":"info","time":1686162923712420400,"caller":"hilMock.go:151","message":"[{18.66 19.42 18 45.16}]"}
-{"level":"info","time":1686162925703880000,"caller":"hilMock.go:151","message":"[{12.52 11.21 89 28.47}]"}
-{"level":"info","time":1686162927702751300,"caller":"hilMock.go:151","message":"[{16.68 6.2 66 28.86}]"}
-{"level":"info","time":1686162928963393600,"caller":"hilMock.go:128","message":"Control order: {4 true}"}
-{"level":"info","time":1686162929716039700,"caller":"hilMock.go:151","message":"[{17.75 8.87 15 41.03}]"}
-{"level":"info","time":1686162931704618800,"caller":"hilMock.go:151","message":"[{12.98 16.59 31 25.3}]"}
-{"level":"info","time":1686162933299017600,"caller":"hilMock.go:128","message":"Control order: {4 false}"}
-{"level":"info","time":1686162933702009900,"caller":"hilMock.go:151","message":"[{11.54 3.42 47 58.28}]"}
-{"level":"info","time":1686162934713651700,"caller":"hilMock.go:108","message":"Finish simulation"}
-{"level":"info","time":1686162934715706900,"caller":"hilMock.go:57","message":"IDLE"}
-{"level":"error","error":"read tcp 127.0.0.2:65236->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1686162937100807900,"caller":"hilMock.go:42","message":"error receiving message in IDLE"}
-{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connectex: No connection could be made because the target machine actively refused it.","time":1686162939141914500,"caller":"main.go:28","message":"Error connecting WebSocket"}
+{"level":"info","time":1686253490587252800,"caller":"hilMock.go:30","message":"IDLE"}

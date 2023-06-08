@@ -3,7 +3,6 @@ module github.com/HyperloopUPV-H8/hil-gui/hil-mock
 go 1.19
 
 require (
-	github.com/aquilax/go-perlin v1.1.0
 	github.com/gorilla/websocket v1.5.0
 	github.com/rs/zerolog v1.29.1
 )
