@@ -1,0 +1,1 @@
+{"level":"fatal","error":"open ./config.toml: no such file or directory","time":1686315828267141950,"caller":"main.go:79","message":"error reading config file"}
