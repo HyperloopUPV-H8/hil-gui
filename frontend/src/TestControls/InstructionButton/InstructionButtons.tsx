@@ -1,7 +1,8 @@
 import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
 import style from "./InstructionButtons.module.scss";
-import { ReactComponent as PerturbationIcon } from "assets/svg/perturbationIcon.svg";
-import { InstructionButton } from "components/InstructionButton/InstructionButton";
+import { ReactComponent as PerturbationIcon } from "../../assets/svg/perturbationIcon.svg"; //FIXME
+import { InstructionButton } from "../../components/InstructionButton/InstructionButton";
+//import { InstructionButton } from "components/InstructionButton/InstructionButton"; //FIXME: Changes imports to abs paths
 
 type Props = {
     sendJsonMessage: SendJsonMessage;
