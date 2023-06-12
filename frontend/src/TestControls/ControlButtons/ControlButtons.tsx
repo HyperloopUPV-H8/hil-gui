@@ -1,7 +1,10 @@
-import { ToggleButton } from "components/ToggleButton/ToggleButton"; //FIXME: Common
-import { ReactComponent as BreakIcon } from "assets/svg/breakIcon.svg";
-import { ReactComponent as PropulseIcon } from "assets/svg/propulseIcon.svg";
-import { ReactComponent as LevitateIcon } from "assets/svg/levitateIcon.svg";
+//import { ToggleButton } from "components/ToggleButton/ToggleButton"; //FIXME: Common
+//import { ToggleButton } from "common/dist/components"; //FIXME
+import { ToggleButton } from "../../../../../common-front/dist/components";
+//import { ReactComponent as BreakIcon } from "assets/svg/breakIcon.svg";
+import { ReactComponent as BreakIcon } from "../../assets/svg/breakIcon.svg";
+import { ReactComponent as PropulseIcon } from "../../assets/svg/propulseIcon.svg";
+import { ReactComponent as LevitateIcon } from "../../assets/svg/levitateIcon.svg";
 import style from "./ControlButtons.module.scss";
 import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
 

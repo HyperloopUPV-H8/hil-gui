@@ -1,16 +1,9 @@
-import { ToggleButton } from "components/ToggleButton/ToggleButton";
-import { ToggleInput } from "components/ToggleInput/ToggleInput";
-import { ReactComponent as BreakIcon } from "assets/svg/breakIcon.svg";
-import { ReactComponent as PropulseIcon } from "assets/svg/propulseIcon.svg";
-import { ReactComponent as LevitateIcon } from "assets/svg/levitateIcon.svg";
-import { ReactComponent as PerturbationIcon } from "assets/svg/perturbationIcon.svg";
-import { PlayButton } from "components/PlayButton/PlayButton";
-import { ButtonTag } from "components/ButtonTag/ButtonTag";
+//import { PlayButton } from "common/dist/components";
+import { PlayButton } from "../../../../common-front/dist/components";
 import style from "./TestControls.module.scss";
-import { useControlForm } from "./useControlForm";
-import { initialFormDescription } from "./initialFormDataMock";
+// import { useControlForm } from "./useControlForm";
+// import { initialFormDescription } from "./initialFormDataMock";
 import { ControlButtons } from "./ControlButtons/ControlButtons";
-import { ControlInputs } from "./ControlInputs/ControlInputs";
 import {
     SendJsonMessage,
     SendMessage,
@@ -34,9 +27,10 @@ export const TestControls = ({
     sendMessage,
     lastMessage,
 }: Props) => {
-    const [form, ChangeValue, ChangeEnable, SubmitHandler] = useControlForm(
-        initialFormDescription
-    );
+    //FIXME: Not used now
+    // const [form, ChangeValue, ChangeEnable, SubmitHandler] = useControlForm(
+    //     initialFormDescription
+    // );
     const [playButtonsState, setPlayButtonsState] = useState<PlayButtons>({
         play: false,
         stop: false,

@@ -4,6 +4,7 @@ import style from "./App.module.scss";
 import { TestControls } from "./TestControls/TestControls";
 import "common/dist/style.css"; //FIXME
 import { ThreeJsVehicle } from "./ThreeJs/ThreeJsVehicle";
+import { PageWrapper } from "common/dist/components";
 
 const SERVER_URL = `${import.meta.env.VITE_SERVER_IP_HIL}:${
     //FIXME: change to congif.toml
