@@ -1,5 +1,3 @@
-@use "src/styles/colors.scss";
-
 .testControlsWrapper {
     width: 12.5rem;
     display: flex;
@@ -23,8 +21,8 @@
 }
 
 .title {
-    background-color: colors.getColor("tertiary", 90);
-    color: colors.getColor("tertiary", 70);
+    background-color: var(--tertiary-90);
+    color: var(--tertiary-70);
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
     padding: 0.5rem;

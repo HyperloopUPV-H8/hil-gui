@@ -1,5 +1,5 @@
 //import { PlayButton } from "common/dist/components";
-import { PlayButton } from "../../../../common-front/dist/components";
+import { PlayButton } from "common"; //FIXME
 import style from "./TestControls.module.scss";
 // import { useControlForm } from "./useControlForm";
 // import { initialFormDescription } from "./initialFormDataMock";
@@ -8,7 +8,7 @@ import {
     SendJsonMessage,
     SendMessage,
 } from "react-use-websocket/dist/lib/types";
-import { InstructionButtons } from "./InstructionButton/InstructionButtons";
+import { InstructionButtons } from "./InstructionButtons/InstructionButtons";
 import { useState } from "react";
 
 type Props = {
