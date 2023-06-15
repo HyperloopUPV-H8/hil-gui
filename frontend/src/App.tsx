@@ -3,7 +3,6 @@ import useWebSocket from "react-use-websocket";
 import style from "./App.module.scss";
 import { TestControls } from "./TestControls/TestControls";
 import { ThreeJsVehicle } from "./ThreeJs/ThreeJsVehicle";
-import { PageWrapper } from "common"; //"common/dist/components";
 
 const SERVER_URL = `${import.meta.env.VITE_SERVER_IP_HIL}:${
     //FIXME: change to congif.toml
@@ -44,7 +43,11 @@ function App() {
     }, [lastJsonMessage]);
 
     return (
-        <PageWrapper title="Testing">
+        <main className={style.pageWrapper}>
+            <header className={style.header}>
+                <h1>Testing</h1>
+            </header>
+
             <div className={style.testingPageWrapper}>
                 <TestControls
                     sendJsonMessage={sendJsonMessage}
@@ -64,7 +67,7 @@ function App() {
                     <div className={style.graphics}></div>
                 </div>
             </div>
-        </PageWrapper>
+        </main>
     );
 }
 
