@@ -3,11 +3,15 @@ import useWebSocket from "react-use-websocket";
 import style from "./App.module.scss";
 import { TestControls } from "./TestControls/TestControls";
 import { ThreeJsVehicle } from "./ThreeJs/ThreeJsVehicle";
+import { GaugeTag } from "common";
+import { GaugeSection } from "components/GaugeSection/GaugeSection";
 
-const SERVER_URL = `${import.meta.env.VITE_SERVER_IP_HIL}:${
-    //FIXME: change to congif.toml
-    import.meta.env.VITE_SERVER_PORT_HIL
-}${import.meta.env.VITE_BACKEND_WEBSOCKET_PATH}`;
+// const SERVER_URL = `${import.meta.env.VITE_SERVER_IP_HIL}:${
+//     //FIXME: change to congif.toml
+//     import.meta.env.VITE_SERVER_PORT_HIL
+// }${import.meta.env.VITE_BACKEND_WEBSOCKET_PATH}`;
+
+const SERVER_URL = "127.0.0.1:8010/backend";
 
 const WEBSOCKET_URL = `ws://${SERVER_URL}`; //FIXME
 
@@ -62,7 +66,9 @@ function App() {
                             />
                         </div>
 
-                        <div className={style.info}></div>
+                        <div className={style.info}>
+                            <GaugeSection info={vehicleState} />
+                        </div>
                     </div>
                     <div className={style.graphics}></div>
                 </div>
