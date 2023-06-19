@@ -28,3 +28,23 @@
 {"level":"info","time":1687173004418452400,"caller":"hilHandler.go:176","message":"Finish simulation"}
 {"level":"info","time":1687173004419947100,"caller":"hilHandler.go:69","message":"IDLE"}
 {"level":"info","time":1687173004420209400,"caller":"hilHandler.go:211","message":"HIL received finish simulation"}
+{"level":"error","error":"websocket: close 1005 (no status)","time":1687173253998825500,"caller":"hilHandler.go:51","message":"error receiving message in IDLE"}
+{"level":"warn","time":1687173253999333600,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}
+{"level":"info","time":1687173254010662700,"caller":"main.go:47","message":"Frontened connected: &{0xc0001826e0 0xc0000a6000} 127.0.0.1:55967"}
+{"level":"info","time":1687173254013893000,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"error","error":"websocket: close 1001 (going away)","time":1687173313361026400,"caller":"hilHandler.go:51","message":"error receiving message in IDLE"}
+{"level":"error","error":"websocket: close 1001 (going away)","time":1687173313361026400,"caller":"hilHandler.go:51","message":"error receiving message in IDLE"}
+{"level":"warn","time":1687173313364066600,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}
+{"level":"warn","time":1687173313376657000,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}
+{"level":"info","time":1687173313997591700,"caller":"main.go:47","message":"Frontened connected: &{0xc0002ba000 0xc0000a6000} 127.0.0.1:55992"}
+{"level":"info","time":1687173313999003500,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"info","time":1687173314031160700,"caller":"main.go:47","message":"Frontened connected: &{0xc000182840 0xc0000a6000} 127.0.0.1:55993"}
+{"level":"info","time":1687173314032688400,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"error","error":"websocket: close 1001 (going away)","time":1687173392198590900,"caller":"hilHandler.go:51","message":"error receiving message in IDLE"}
+{"level":"error","error":"websocket: close 1001 (going away)","time":1687173392198590900,"caller":"hilHandler.go:51","message":"error receiving message in IDLE"}
+{"level":"warn","time":1687173392203670100,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}
+{"level":"warn","time":1687173392206294000,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}
+{"level":"info","time":1687173393458662300,"caller":"main.go:47","message":"Frontened connected: &{0xc0002ba2c0 0xc0000a6000} 127.0.0.1:56021"}
+{"level":"info","time":1687173393462369800,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"info","time":1687173393584339300,"caller":"main.go:47","message":"Frontened connected: &{0xc0002ba420 0xc0000a6000} 127.0.0.1:56022"}
+{"level":"info","time":1687173393598044500,"caller":"hilHandler.go:41","message":"IDLE"}
