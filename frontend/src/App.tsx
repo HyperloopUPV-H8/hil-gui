@@ -3,8 +3,8 @@ import useWebSocket from "react-use-websocket";
 import style from "./App.module.scss";
 import { TestControls } from "./TestControls/TestControls";
 import { ThreeJsVehicle } from "./ThreeJs/ThreeJsVehicle";
-import { GaugeTag } from "common";
 import { GaugeSection } from "components/GaugeSection/GaugeSection";
+import { ChartSection } from "components/ChartSection/ChartSection";
 
 // const SERVER_URL = `${import.meta.env.VITE_SERVER_IP_HIL}:${
 //     //FIXME: change to congif.toml
@@ -70,7 +70,9 @@ function App() {
                             <GaugeSection info={vehicleState} />
                         </div>
                     </div>
-                    <div className={style.graphics}></div>
+                    <div className={style.graphics}>
+                        <ChartSection />
+                    </div>
                 </div>
             </div>
         </main>

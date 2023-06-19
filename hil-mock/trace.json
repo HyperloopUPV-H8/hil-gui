@@ -28,3 +28,4 @@
 {"level":"info","time":1687173002840318300,"caller":"hilMock.go:151","message":"[{15.13 18.74 31 38.52}]"}
 {"level":"info","time":1687173004419947100,"caller":"hilMock.go:108","message":"Finish simulation"}
 {"level":"info","time":1687173004421780000,"caller":"hilMock.go:57","message":"IDLE"}
+{"level":"error","error":"read tcp 127.0.0.2:55786->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1687173579885297000,"caller":"hilMock.go:42","message":"error receiving message in IDLE"}
