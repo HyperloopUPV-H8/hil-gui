@@ -32,7 +32,7 @@ function App() {
 
     const { sendMessage, sendJsonMessage, lastMessage, lastJsonMessage } =
         useWebSocket(WEBSOCKET_URL, {
-            shouldReconnect: (closeEvent) => {
+            shouldReconnect: () => {
                 return true;
             },
         });
@@ -54,9 +54,9 @@ function App() {
 
             <div className={style.testingPageWrapper}>
                 <TestControls
-                    sendJsonMessage={sendJsonMessage}
-                    sendMessage={sendMessage}
-                    lastMessage={lastMessage}
+                    onControlClick={() => {}}
+                    onPerturbationClick={() => {}}
+                    onSimulationClick={() => {}}
                 />
                 <div className={style.podRepresentation}>
                     <div className={style.threeJSAndInfo}>

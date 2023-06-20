@@ -4,17 +4,20 @@ import style from "./TestControls.module.scss";
 // import { useControlForm } from "./useControlForm";
 // import { initialFormDescription } from "./initialFormDataMock";
 import { ControlButtons } from "./ControlButtons/ControlButtons";
-import {
-    SendJsonMessage,
-    SendMessage,
-} from "react-use-websocket/dist/lib/types";
-import { InstructionButtons } from "./InstructionButtons/InstructionButtons";
+import { PerturbationButtons } from "./InstructionButtons/InstructionButtons";
 import { useState } from "react";
+import { ControlEvent, PerturbatioEvent, SimulationEvent } from "./types";
+
+// type Props = {
+//     sendJsonMessage: SendJsonMessage;
+//     sendMessage: SendMessage;
+//     lastMessage: MessageEvent<any> | null;
+// };
 
 type Props = {
-    sendJsonMessage: SendJsonMessage;
-    sendMessage: SendMessage;
-    lastMessage: MessageEvent<any> | null;
+    onSimulationClick: (ev: SimulationEvent) => void;
+    onControlClick: (ev: ControlEvent) => void;
+    onPerturbationClick: (ev: PerturbatioEvent) => void;
 };
 
 export type PlayButtons = {
@@ -23,45 +26,60 @@ export type PlayButtons = {
 };
 
 export const TestControls = ({
-    sendJsonMessage,
-    sendMessage,
-    lastMessage,
+    onSimulationClick,
+    onControlClick,
+    onPerturbationClick,
 }: Props) => {
-    //FIXME: Not used now
-    // const [form, ChangeValue, ChangeEnable, SubmitHandler] = useControlForm(
-    //     initialFormDescription
-    // );
-    const [playButtonsState, setPlayButtonsState] = useState<PlayButtons>({
+    const [buttonsState, setButtonsState] = useState<PlayButtons>({
         play: false,
         stop: false,
     });
-
-    const changePlayButtons = (buttonStates: PlayButtons) => {
-        setPlayButtonsState(buttonStates);
-    };
 
     return (
         <div className={style.testControlsWrapper}>
             <div className={style.playWrapper}>
                 <PlayButton
                     variant="play"
-                    sendMessage={sendMessage}
-                    lastMessage={lastMessage}
-                    state={playButtonsState.play}
-                    changeState={changePlayButtons}
+                    onClick={() =>
+                        setButtonsState((prev) => {
+                            const newPlay = !prev.play;
+                            onSimulationClick({
+                                kind: "play",
+                                state: newPlay,
+                            });
+                            return {
+                                play: newPlay,
+                                stop: prev.stop,
+                            };
+                        })
+                    }
+                    state={buttonsState.play}
                 />
                 <PlayButton
                     variant="stop"
-                    state={playButtonsState.stop}
-                    changeState={changePlayButtons}
-                    sendMessage={sendMessage}
+                    onClick={() =>
+                        setButtonsState((prev) => {
+                            const newStop = !prev.stop;
+                            onSimulationClick({
+                                kind: "stop",
+                                state: newStop,
+                            });
+                            return {
+                                play: newStop,
+                                stop: prev.stop,
+                            };
+                        })
+                    }
+                    state={buttonsState.stop}
                 />
             </div>
             <div className={style.sectionWrapper}>
                 <div className={style.title}>Controls</div>
                 <div className={style.body}>
-                    <ControlButtons sendJsonMessage={sendJsonMessage} />
-                    <InstructionButtons sendJsonMessage={sendJsonMessage} />
+                    <ControlButtons onClick={(ev) => onControlClick(ev)} />
+                    <PerturbationButtons
+                        onClick={(ev) => onPerturbationClick(ev)}
+                    />
                 </div>
             </div>
         </div>

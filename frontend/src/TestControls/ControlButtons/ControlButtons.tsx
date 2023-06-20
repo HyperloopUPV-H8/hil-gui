@@ -1,37 +1,34 @@
-//import { ToggleButton } from "components/ToggleButton/ToggleButton"; //FIXME: Common
-//import { ToggleButton } from "common/dist/components"; //FIXME
 import { ToggleButton } from "common";
-//import { ReactComponent as BreakIcon } from "assets/svg/breakIcon.svg";
 import { ReactComponent as BreakIcon } from "assets/svg/breakIcon.svg";
 import { ReactComponent as PropulseIcon } from "assets/svg/propulseIcon.svg";
 import { ReactComponent as LevitateIcon } from "assets/svg/levitateIcon.svg";
 import style from "./ControlButtons.module.scss";
-import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
+import { ControlEvent } from "TestControls/types";
 
 type Props = {
-    sendJsonMessage: SendJsonMessage;
+    onClick: (ev: ControlEvent) => void;
 };
 
-export const ControlButtons = ({ sendJsonMessage }: Props) => {
+export const ControlButtons = ({ onClick }: Props) => {
     return (
         <div className={style.controlsWrapper}>
             <ToggleButton
                 id={0}
-                label="levitation"
+                label="Levitate"
                 icon={<LevitateIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={(state) => onClick({ kind: "levitate", state })}
             />
             <ToggleButton
                 id={1}
-                label="propulsion"
+                label="Accelerate"
                 icon={<PropulseIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={(state) => onClick({ kind: "accelerate", state })}
             />
             <ToggleButton
                 id={2}
-                label="brake"
+                label="Brake"
                 icon={<BreakIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={(state) => onClick({ kind: "brake", state })}
             />
         </div>
     );

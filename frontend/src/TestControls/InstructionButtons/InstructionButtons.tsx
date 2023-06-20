@@ -1,36 +1,32 @@
-import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
 import style from "./InstructionButtons.module.scss";
 // import { ReactComponent as PerturbationIcon } from "assets/svg/perturbationIcon.svg"; //"assets/svg/perturbationIcon.svg"; //FIXME
 import { ReactComponent as PerturbationIcon } from "assets/svg/perturbationIcon.svg";
-import { InstructionButton } from "components/InstructionButton/InstructionButton"; //"components/InstructionButton/InstructionButton";
+import { PerturbatioEvent } from "TestControls/types";
+import { ToggleButton } from "common";
 //import { InstructionButton } from "components/InstructionButton/InstructionButton"; //FIXME: Changes imports to abs paths
 
 type Props = {
-    sendJsonMessage: SendJsonMessage;
+    onClick: (ev: PerturbatioEvent) => void;
 };
 
-export const InstructionButtons = ({ sendJsonMessage }: Props) => {
+export const PerturbationButtons = ({ onClick }: Props) => {
     return (
         <div className={style.instructionsWrapper}>
-            <InstructionButton
-                id={3}
+            <ToggleButton
                 icon={<PerturbationIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={() => onClick({ id: "default" })}
             />
-            <InstructionButton
-                id={4}
+            <ToggleButton
                 icon={<PerturbationIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={() => onClick({ id: "default" })}
             />
-            <InstructionButton
-                id={5}
+            <ToggleButton
                 icon={<PerturbationIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={() => onClick({ id: "default" })}
             />
-            <InstructionButton
-                id={6}
+            <ToggleButton
                 icon={<PerturbationIcon />}
-                sendJsonMessage={sendJsonMessage}
+                onClick={() => onClick({ id: "default" })}
             />
         </div>
     );

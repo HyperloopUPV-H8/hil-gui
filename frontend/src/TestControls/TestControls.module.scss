@@ -18,15 +18,16 @@
     border-radius: 1rem;
     justify-content: space-between;
     gap: 0.2rem;
+    border-radius: 0.8rem;
+    overflow: hidden;
 }
 
 .title {
     background-color: var(--tertiary-90);
     color: var(--tertiary-70);
-    border-top-right-radius: 1rem;
-    border-top-left-radius: 1rem;
-    padding: 0.5rem;
-    font-size: large;
+    padding: 0.5rem 0.8rem;
+    font-size: 1rem;
+    font-weight: bold;
 }
 
 .body {
