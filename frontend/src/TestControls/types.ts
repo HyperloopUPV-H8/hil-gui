@@ -8,4 +8,9 @@ export type ControlEvent = {
     state: boolean;
 };
 
+export type ControlOrder = {
+    id: number;
+    state: boolean;
+};
+
 export type PerturbatioEvent = { id: string };

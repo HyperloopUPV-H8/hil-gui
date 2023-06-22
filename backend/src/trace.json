@@ -1,17 +1,8 @@
-{"level":"info","time":1687277941318962385,"caller":"main.go:70","message":"Listening in 127.0.0.1:8010/backend"}
-{"level":"info","time":1687278329364015730,"caller":"main.go:47","message":"Frontened connected: &{0xc000142420 <nil>} 127.0.0.1:42272"}
-{"level":"info","time":1687278329377592105,"caller":"main.go:47","message":"Frontened connected: &{0xc000142580 <nil>} 127.0.0.1:42274"}
-{"level":"info","time":1687278380014780578,"caller":"main.go:47","message":"Frontened connected: &{0xc0000c0000 <nil>} 127.0.0.1:33954"}
-{"level":"info","time":1687278385050245364,"caller":"main.go:47","message":"Frontened connected: &{0xc0001426e0 <nil>} 127.0.0.1:33964"}
-{"level":"info","time":1687278415694417013,"caller":"main.go:47","message":"Frontened connected: &{0xc0000c0160 <nil>} 127.0.0.1:58510"}
-{"level":"info","time":1687278417944914586,"caller":"main.go:47","message":"Frontened connected: &{0xc000142840 <nil>} 127.0.0.1:58524"}
-{"level":"info","time":1687278499880975571,"caller":"main.go:47","message":"Frontened connected: &{0xc0001429a0 <nil>} 127.0.0.1:46462"}
-{"level":"info","time":1687278499897085071,"caller":"main.go:47","message":"Frontened connected: &{0xc000142c60 <nil>} 127.0.0.1:45494"}
-{"level":"info","time":1687278508659396676,"caller":"main.go:47","message":"Frontened connected: &{0xc000142dc0 <nil>} 127.0.0.1:45496"}
-{"level":"info","time":1687278508673157433,"caller":"main.go:47","message":"Frontened connected: &{0xc000142f20 <nil>} 127.0.0.1:45508"}
-{"level":"info","time":1687278901790273044,"caller":"main.go:47","message":"Frontened connected: &{0xc000143080 <nil>} 127.0.0.1:47696"}
-{"level":"info","time":1687278901802059522,"caller":"main.go:47","message":"Frontened connected: &{0xc0001431e0 <nil>} 127.0.0.1:47698"}
-{"level":"info","time":1687279017130278047,"caller":"main.go:47","message":"Frontened connected: &{0xc000143340 <nil>} 127.0.0.1:34540"}
-{"level":"info","time":1687279027538367267,"caller":"main.go:47","message":"Frontened connected: &{0xc0001434a0 <nil>} 127.0.0.1:44468"}
-{"level":"info","time":1687279027553869430,"caller":"main.go:47","message":"Frontened connected: &{0xc0000c0420 <nil>} 127.0.0.1:44470"}
-{"level":"info","time":1687279454005345621,"caller":"main.go:47","message":"Frontened connected: &{0xc000143600 <nil>} 127.0.0.1:35568"}
+{"level":"info","time":1687349225839037600,"caller":"main.go:70","message":"Listening in 127.0.0.1:8010/backend"}
+{"level":"info","time":1687349228711287200,"caller":"main.go:47","message":"Frontened connected: &{0xc0001106e0 <nil>} 127.0.0.1:56670"}
+{"level":"info","time":1687349232178505000,"caller":"main.go:54","message":"HIL connected: &{0xc0001106e0 0xc0001ca000} 127.0.0.2:56671"}
+{"level":"info","time":1687349232179537100,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"info","time":1687349242523668100,"caller":"hilHandler.go:104","message":"Simulation state"}
+{"level":"warn","time":1687349242539516400,"caller":"hilHandler.go:185","message":"It is not an order"}
+{"level":"error","error":"read tcp 127.0.0.1:8010->127.0.0.2:56671: wsarecv: An existing connection was forcibly closed by the remote host.","time":1687349303415613600,"caller":"hilHandler.go:206","message":"Error reading message from HIL"}
+{"level":"warn","time":1687349303416532900,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}

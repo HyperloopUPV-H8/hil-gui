@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
-import useWebSocket from "react-use-websocket";
+import useWebSocket, { SendMessage } from "react-use-websocket";
 import style from "./App.module.scss";
 import { TestControls } from "./TestControls/TestControls";
 import { ThreeJsVehicle } from "./ThreeJs/ThreeJsVehicle";
 import { GaugeSection } from "components/GaugeSection/GaugeSection";
 import { ChartSection } from "components/ChartSection/ChartSection";
+import { ControlOrder, SimulationEvent } from "TestControls/types";
+import { WebSocketMessage } from "react-use-websocket/dist/lib/types";
 
 // const SERVER_URL = `${import.meta.env.VITE_SERVER_IP_HIL}:${
 //     //FIXME: change to congif.toml
@@ -14,6 +16,8 @@ import { ChartSection } from "components/ChartSection/ChartSection";
 const SERVER_URL = "127.0.0.1:8010/backend";
 
 const WEBSOCKET_URL = `ws://${SERVER_URL}`; //FIXME
+const START_SIMULATION = "start_simulation";
+const FINISH_SIMULTATION = "finish_simulation";
 
 export type VehicleState = {
     yDistance: number;
@@ -54,9 +58,34 @@ function App() {
 
             <div className={style.testingPageWrapper}>
                 <TestControls
-                    onControlClick={() => {}}
-                    onPerturbationClick={() => {}}
-                    onSimulationClick={() => {}}
+                    onControlClick={(ev) => {
+                        let numericId = -1;
+                        switch (ev.kind) {
+                            case "levitate":
+                                numericId = 0;
+                                break;
+                            case "accelerate":
+                                numericId = 1;
+                                break;
+                            case "brake":
+                                numericId = 2;
+                                break;
+                        }
+                        const controlOrder: ControlOrder = {
+                            id: numericId,
+                            state: ev.state,
+                        };
+                        console.log(controlOrder);
+                        sendJsonMessage(controlOrder);
+                    }}
+                    onPerturbationClick={(ev) => {
+                        console.log(ev);
+                        sendJsonMessage(ev);
+                    }}
+                    onSimulationClick={(ev) => {
+                        sendPlayButtonEvent(ev, sendMessage);
+                    }}
+                    lastMessage={lastMessage}
                 />
                 <div className={style.podRepresentation}>
                     <div className={style.threeJSAndInfo}>
@@ -71,7 +100,7 @@ function App() {
                         </div>
                     </div>
                     <div className={style.graphics}>
-                        <ChartSection />
+                        <ChartSection info={vehicleState} />
                     </div>
                 </div>
             </div>
@@ -80,3 +109,27 @@ function App() {
 }
 
 export default App;
+
+function sendPlayButtonEvent(
+    ev: SimulationEvent,
+    sendMessage: SendMessage | undefined
+    // changeState: (playButtons: PlayButtons) => void
+) {
+    switch (ev.kind) {
+        case "play":
+            console.log(START_SIMULATION);
+            sendMsgSimultation(sendMessage!, START_SIMULATION);
+            //changeState({ play: !state, stop: state }); TODO: Change state
+            break;
+        case "stop":
+            console.log(FINISH_SIMULTATION);
+            sendMsgSimultation(sendMessage!, FINISH_SIMULTATION);
+            //changeState({ play: state, stop: !state }); TODO: Change state
+            break;
+    }
+}
+
+function sendMsgSimultation(sendMessage: SendMessage, msg: string) {
+    const message: WebSocketMessage = msg;
+    sendMessage(message);
+}

@@ -5,8 +5,8 @@ import style from "./TestControls.module.scss";
 // import { initialFormDescription } from "./initialFormDataMock";
 import { ControlButtons } from "./ControlButtons/ControlButtons";
 import { PerturbationButtons } from "./InstructionButtons/InstructionButtons";
-import { useState } from "react";
-import { ControlEvent, PerturbatioEvent, SimulationEvent } from "./types";
+import { useEffect, useState } from "react";
+import { ControlEvent, ControlOrder, SimulationEvent } from "./types";
 
 // type Props = {
 //     sendJsonMessage: SendJsonMessage;
@@ -17,7 +17,8 @@ import { ControlEvent, PerturbatioEvent, SimulationEvent } from "./types";
 type Props = {
     onSimulationClick: (ev: SimulationEvent) => void;
     onControlClick: (ev: ControlEvent) => void;
-    onPerturbationClick: (ev: PerturbatioEvent) => void;
+    onPerturbationClick: (ev: ControlOrder) => void;
+    lastMessage: MessageEvent<any> | null;
 };
 
 export type PlayButtons = {
@@ -25,15 +26,30 @@ export type PlayButtons = {
     stop: boolean;
 };
 
+const START_IDLE = "Back-end is ready!";
+
 export const TestControls = ({
     onSimulationClick,
     onControlClick,
     onPerturbationClick,
+    lastMessage,
 }: Props) => {
     const [buttonsState, setButtonsState] = useState<PlayButtons>({
         play: false,
         stop: false,
     });
+
+    useEffect(() => {
+        const stringData: string = lastMessage?.data;
+        if (stringData == START_IDLE) {
+            setButtonsState(() => {
+                return {
+                    play: true,
+                    stop: false,
+                };
+            });
+        }
+    }, [lastMessage]);
 
     return (
         <div className={style.testControlsWrapper}>
@@ -46,6 +62,10 @@ export const TestControls = ({
                             onSimulationClick({
                                 kind: "play",
                                 state: newPlay,
+                            });
+                            console.log({
+                                play: newPlay,
+                                stop: prev.stop,
                             });
                             return {
                                 play: newPlay,

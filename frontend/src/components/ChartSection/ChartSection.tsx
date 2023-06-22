@@ -26,7 +26,7 @@ function createLineDescription(): LineDescription {
         color: "red",
         range: [0, 100],
         getUpdate: () => {
-            console.log(getSineValue());
+            //console.log(getSineValue());
             return getSineValue();
         },
     };
