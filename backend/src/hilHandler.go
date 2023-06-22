@@ -167,19 +167,23 @@ func (hilHandler *HilHandler) startListeningOrders(orderChan chan<- models.Order
 			default:
 				_, msg, errReadJSON := hilHandler.frontConn.ReadMessage()
 				stringMsg := string(msg)
-				if errReadJSON != nil {
-					trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
-					errChan <- errReadJSON
-					return //FIXME: Before it was a break
-				}
-				if stringMsg == FINISH_SIMULATION {
+				if errReadJSON != nil || stringMsg == FINISH_SIMULATION {
+					if errReadJSON != nil {
+						trace.Error().Err(errReadJSON).Msg("Error reading message from frontend") //FIXME: Send FINISH_SIMULATION
+					}
+
 					trace.Info().Msg("Finish simulation")
 					errStoping := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, []byte(FINISH_SIMULATION))
 					if errStoping != nil {
 						trace.Error().Err(errStoping).Msg("Error sending finish simulation to HIL")
 						errChan <- errStoping
 					}
-					stopChan <- struct{}{}
+
+					if errReadJSON != nil {
+						errChan <- errReadJSON
+					} else {
+						stopChan <- struct{}{}
+					}
 					return
 				} else if !addOrderToChan(msg, orderChan) {
 					trace.Warn().Msg("It is not an order")
@@ -200,8 +204,7 @@ func (hilHandler *HilHandler) startListeningData(dataChan chan<- models.VehicleS
 			case <-ctx.Done():
 				return
 			default:
-				_, msg, err := hilHandler.hilConn.ReadMessage() //FIXME, it get block when done is close, if not new msg, it get stuck
-
+				_, msg, err := hilHandler.hilConn.ReadMessage()
 				if err != nil {
 					trace.Error().Err(err).Msg("Error reading message from HIL")
 					errChan <- err

@@ -65,11 +65,11 @@ export const TestControls = ({
                             });
                             console.log({
                                 play: newPlay,
-                                stop: prev.stop,
+                                stop: !prev.stop,
                             });
                             return {
                                 play: newPlay,
-                                stop: prev.stop,
+                                stop: !prev.stop,
                             };
                         })
                     }
@@ -85,8 +85,8 @@ export const TestControls = ({
                                 state: newStop,
                             });
                             return {
-                                play: newStop,
-                                stop: prev.stop,
+                                play: !prev.play,
+                                stop: newStop,
                             };
                         })
                     }
