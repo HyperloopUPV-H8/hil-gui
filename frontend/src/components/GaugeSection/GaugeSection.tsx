@@ -13,7 +13,6 @@ export function GaugeSection({ info }: Props) {
         <div className={style.gaugeSection}>
             <div className={style.gaugeWrapper}>
                 <GaugeTag
-                    className=""
                     name="Current"
                     units="Amp"
                     max={100}
@@ -24,7 +23,6 @@ export function GaugeSection({ info }: Props) {
             </div>
             <div className={style.gaugeWrapper}>
                 <GaugeTag
-                    className=""
                     name="Duty"
                     units=""
                     max={100}
@@ -35,7 +33,6 @@ export function GaugeSection({ info }: Props) {
             </div>
             <div className={style.gaugeWrapper}>
                 <GaugeTag
-                    className=""
                     name="Temperature"
                     max={100}
                     min={0}
