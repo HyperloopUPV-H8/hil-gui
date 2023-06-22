@@ -5,7 +5,7 @@
     padding: 1.3rem;
     width: 100vw;
     height: 100vh;
-    background-color: var(--primary-99);
+    background-color: var(--primary-95);
 }
 
 .header {
@@ -28,16 +28,17 @@
     flex-flow: row;
     justify-content: space-between;
     align-items: stretch;
-    gap: 0.5rem;
+    gap: 1rem;
     border-radius: 1rem;
     flex-grow: 1;
+    margin-top: 1rem;
 }
 
 .podRepresentation {
     flex-grow: 1;
     display: flex;
     flex-flow: column;
-    gap: 0.5rem;
+    gap: 1rem;
     border-radius: 1rem;
 }
 
@@ -45,22 +46,26 @@
     flex-basis: 20rem;
     display: flex;
     flex-flow: row;
-    gap: 0.5rem;
+    gap: 1rem;
     border-radius: 1rem;
+    max-height: 22rem;
 }
 
 .threeJS {
-    border-style: solid;
+    // border-style: solid;
     border-radius: 1rem;
+    background-color: white;
     flex-basis: 45rem;
-    min-width: 1000px;
+    min-width: 67rem;
 }
 
 .info {
-    border-color: yellow;
-    border-style: double;
-    flex: 1 4 auto;
+    // border-color: yellow;
+    // border-style: double;
     border-radius: 1rem;
+    background-color: white;
+    flex: 1 4 auto;
+    padding: 0.3rem;
 }
 
 .graphics {

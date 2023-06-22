@@ -1,5 +1,9 @@
-.GaugeWrapper {
+.gaugeSection {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.gaugeWrapper {
+    font-size: small;
 }
