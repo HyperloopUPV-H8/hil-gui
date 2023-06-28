@@ -1,6 +1,6 @@
 import { VehicleState } from "App";
 import { LineDescription, LinesChart, useGlobalTicker } from "common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
     info: VehicleState;
@@ -20,35 +20,54 @@ function getSineValue() {
     return value;
 }
 
-function createLineDescription(): LineDescription {
+function createLineDescriptionArray(info: VehicleState): LineDescription[] {
+    let result: LineDescription[] = [];
+    let attribute: keyof typeof info;
+    for (attribute in info) {
+        result.push(createSingleLineDescription(attribute, info[attribute]));
+    }
+    return result;
+}
+
+function createSingleLineDescription(
+    attribute: string,
+    value: number
+): LineDescription {
     return {
-        id: "id",
+        id: attribute,
         color: "red",
         range: [0, 100],
         getUpdate: () => {
-            //console.log(getSineValue());
-            return getSineValue();
+            return value;
         },
     };
 }
 
 export function ChartSection({ info }: Props) {
-    const [lineDesc, setLineDesc] = useState<LineDescription>(
-        createLineDescription()
+    const [lineDescArray, setLineDescArray] = useState<LineDescription[]>(
+        createLineDescriptionArray(info)
     );
 
-    useGlobalTicker(() => {
-        // setLineDesc( (prev) =>{
-        //     ...prev,
-        // }
-    });
+    useEffect(() => {
+        setLineDescArray(createLineDescriptionArray(info));
+    }, [info]);
 
     return (
-        <LinesChart
-            divisions={6}
-            showGrid={true}
-            items={[lineDesc]} //TODO
-            length={1000}
-        ></LinesChart>
+        <>
+            {lineDescArray.length == 0 ? ( //TODO: This condition has changed
+                <div>Waiting for starting simulation...</div>
+            ) : (
+                Object.entries(lineDescArray).map(([_, lineDesc]) => {
+                    return (
+                        <LinesChart
+                            divisions={6}
+                            showGrid={true}
+                            items={[lineDesc]}
+                            length={1000}
+                        ></LinesChart>
+                    );
+                })
+            )}
+        </>
     );
 }
