@@ -57,37 +57,37 @@ function App() {
             </header>
 
             <div className={style.testingPageWrapper}>
-                <TestControls
-                    onControlClick={(ev) => {
-                        let numericId = -1;
-                        switch (ev.kind) {
-                            case "levitate":
-                                numericId = 0;
-                                break;
-                            case "accelerate":
-                                numericId = 1;
-                                break;
-                            case "brake":
-                                numericId = 2;
-                                break;
-                        }
-                        const controlOrder: ControlOrder = {
-                            id: numericId,
-                            state: ev.state,
-                        };
-                        console.log(controlOrder);
-                        sendJsonMessage(controlOrder);
-                    }}
-                    onPerturbationClick={(ev) => {
-                        console.log(ev);
-                        sendJsonMessage(ev);
-                    }}
-                    onSimulationClick={(ev) => {
-                        sendPlayButtonEvent(ev, sendMessage);
-                    }}
-                    lastMessage={lastMessage}
-                />
                 <div className={style.podRepresentation}>
+                    <TestControls
+                        onControlClick={(ev) => {
+                            let numericId = -1;
+                            switch (ev.kind) {
+                                case "levitate":
+                                    numericId = 0;
+                                    break;
+                                case "accelerate":
+                                    numericId = 1;
+                                    break;
+                                case "brake":
+                                    numericId = 2;
+                                    break;
+                            }
+                            const controlOrder: ControlOrder = {
+                                id: numericId,
+                                state: ev.state,
+                            };
+                            console.log(controlOrder);
+                            sendJsonMessage(controlOrder);
+                        }}
+                        onPerturbationClick={(ev) => {
+                            console.log(ev);
+                            sendJsonMessage(ev);
+                        }}
+                        onSimulationClick={(ev) => {
+                            sendPlayButtonEvent(ev, sendMessage);
+                        }}
+                        lastMessage={lastMessage}
+                    />
                     <div className={style.threeJSAndInfo}>
                         <div className={style.threeJS}>
                             <ThreeJsVehicle
@@ -99,9 +99,9 @@ function App() {
                             <GaugeSection info={vehicleState} />
                         </div>
                     </div>
-                    <div className={style.graphics}>
-                        <ChartSection info={vehicleState} />
-                    </div>
+                </div>
+                <div className={style.graphics}>
+                    <ChartSection info={vehicleState} />
                 </div>
             </div>
         </main>

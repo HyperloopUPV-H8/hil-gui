@@ -25,7 +25,7 @@
 
 .testingPageWrapper {
     display: flex;
-    flex-flow: row;
+    flex-flow: column;
     justify-content: space-between;
     align-items: stretch;
     gap: 1rem;
@@ -37,7 +37,7 @@
 .podRepresentation {
     flex-grow: 1;
     display: flex;
-    flex-flow: column;
+    flex-flow: row;
     gap: 1rem;
     border-radius: 1rem;
 }
