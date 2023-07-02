@@ -1,10 +1,8 @@
-{"level":"info","time":1688296141272363100,"caller":"hilMock.go:30","message":"IDLE"}
-{"level":"info","time":1688296152571099600,"caller":"hilMock.go:75","message":"Simulation state"}
-{"level":"info","time":1688296154573257300,"caller":"hilMock.go:151","message":"[{18.66 19.42 18 45.16}]"}
-{"level":"info","time":1688296156583080400,"caller":"hilMock.go:151","message":"[{12.52 11.21 89 28.47}]"}
-{"level":"info","time":1688296158572219700,"caller":"hilMock.go:151","message":"[{16.68 6.2 66 28.86}]"}
-{"level":"info","time":1688296160572781100,"caller":"hilMock.go:151","message":"[{17.75 8.87 15 41.03}]"}
-{"level":"info","time":1688296160955632900,"caller":"hilMock.go:108","message":"Finish simulation"}
-{"level":"info","time":1688296160957633800,"caller":"hilMock.go:57","message":"IDLE"}
-{"level":"error","error":"read tcp 127.0.0.2:54865->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1688296164986052200,"caller":"hilMock.go:42","message":"error receiving message in IDLE"}
-{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connectex: No connection could be made because the target machine actively refused it.","time":1688296167023554800,"caller":"main.go:28","message":"Error connecting WebSocket"}
+{"level":"info","time":1688303222678806900,"caller":"hilMock.go:30","message":"IDLE"}
+{"level":"info","time":1688303234559799200,"caller":"hilMock.go:75","message":"Simulation state"}
+{"level":"info","time":1688303236591129100,"caller":"hilMock.go:151","message":"[{18.66 19.42 18 45.16}]"}
+{"level":"info","time":1688303238596138200,"caller":"hilMock.go:151","message":"[{12.52 11.21 89 28.47}]"}
+{"level":"info","time":1688303240326053300,"caller":"hilMock.go:108","message":"Finish simulation"}
+{"level":"info","time":1688303240332171500,"caller":"hilMock.go:57","message":"IDLE"}
+{"level":"error","error":"read tcp 127.0.0.2:55579->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1688303244589307700,"caller":"hilMock.go:42","message":"error receiving message in IDLE"}
+{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connectex: No connection could be made because the target machine actively refused it.","time":1688303246616864200,"caller":"main.go:28","message":"Error connecting WebSocket"}

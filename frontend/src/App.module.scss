@@ -35,7 +35,6 @@
 }
 
 .podRepresentation {
-    //flex-grow: 1;
     display: flex;
     flex-flow: row;
     gap: 1rem;
@@ -53,7 +52,6 @@
 }
 
 .threeJS {
-    // border-style: solid;
     border-radius: 1rem;
     background-color: white;
     //flex-basis: 45rem;
@@ -62,8 +60,6 @@
 }
 
 .info {
-    // border-color: yellow;
-    // border-style: double;
     border-radius: 1rem;
     background-color: white;
     flex: 1 4 auto;
@@ -71,15 +67,12 @@
 }
 
 .graphics {
-    // border-color: green;
-    // border-style: double;
     flex-grow: 1;
     display: flex;
     flex-flow: row;
     gap: 0.5rem;
     border-radius: 1rem;
     height: 14rem;
-    background-color: white;
     padding: 0.5rem;
     justify-content: space-around;
     align-items: center;
