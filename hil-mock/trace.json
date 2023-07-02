@@ -1,6 +1,20 @@
-{"level":"info","time":1688305576127460200,"caller":"hilMock.go:30","message":"IDLE"}
-{"level":"info","time":1688305584583583400,"caller":"hilMock.go:75","message":"Simulation state"}
-{"level":"info","time":1688305586595993800,"caller":"hilMock.go:151","message":"[{18.66 19.42 18 45.16}]"}
-{"level":"error","error":"read tcp 127.0.0.2:56257->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1688305588509031500,"caller":"hilMock.go:103","message":"Error reading message from back-end"}
-{"level":"info","time":1688305588513223200,"caller":"hilMock.go:57","message":"IDLE"}
-{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connectex: No connection could be made because the target machine actively refused it.","time":1688305590532924300,"caller":"main.go:28","message":"Error connecting WebSocket"}
+{"level":"info","time":1688311281661097000,"caller":"hilMock.go:30","message":"IDLE"}
+{"level":"info","time":1688311335445651800,"caller":"hilMock.go:75","message":"Simulation state"}
+{"level":"info","time":1688311337461212200,"caller":"hilMock.go:151","message":"[{18.66 11.42 16.07 0.1 0 34.81 0.5482824520086221 0.7198023059725864 0.5122945025158774}]"}
+{"level":"info","time":1688311339461895800,"caller":"hilMock.go:151","message":"[{12.2 12.57 10.29 7.75 88 50.7 0.4414075063219599 0.7343507385549043 0.8459529763218525}]"}
+{"level":"info","time":1688311341463950800,"caller":"hilMock.go:151","message":"[{15.69 12.17 11.54 3.42 47 58.28 0.9793688519023943 0.99157695139352 0.8024300596291041}]"}
+{"level":"info","time":1688311343464292000,"caller":"hilMock.go:151","message":"[{11.22 15.24 18.93 10.8 56 46.43 1.3844958360513768 1.688849317965778 0.5613434292309712}]"}
+{"level":"info","time":1688311345469573000,"caller":"hilMock.go:151","message":"[{21.35 21.71 14.65 0.76 53 37.99 1.0239851606106514 1.2063881303205006 0.7371676495562347}]"}
+{"level":"info","time":1688311347463130000,"caller":"hilMock.go:151","message":"[{22.24 16.19 15.63 3.2800000000000002 98 45.63 1.0520843809655278 1.4026972035619343 0.7404035497626869}]"}
+{"level":"info","time":1688311348824155100,"caller":"hilMock.go:108","message":"Finish simulation"}
+{"level":"info","time":1688311348825155400,"caller":"hilMock.go:57","message":"IDLE"}
+{"level":"info","time":1688311387869018600,"caller":"hilMock.go:75","message":"Simulation state"}
+{"level":"info","time":1688311389881084300,"caller":"hilMock.go:151","message":"[{14.03 14 15.59 17.82 94 26.6 0.8706286010502075 0.8361085816066376 0.36435981929708466}]"}
+{"level":"info","time":1688311390076332800,"caller":"hilMock.go:128","message":"Control order: {0 true}"}
+{"level":"info","time":1688311391452970000,"caller":"hilMock.go:128","message":"Control order: {0 false}"}
+{"level":"info","time":1688311391886227600,"caller":"hilMock.go:151","message":"[{21.69 16.54 22.75 9.75 18 44.83 0.8120788891582048 0.48143796886990575 0.4097872897516197}]"}
+{"level":"info","time":1688311393874449600,"caller":"hilMock.go:151","message":"[{10.57 14.41 19.49 4.8 83 21.39 0.2924267952664934 1.2310578096439184 0.5972704471774765}]"}
+{"level":"info","time":1688311395880315900,"caller":"hilMock.go:151","message":"[{10.08 16.16 17.32 10.57 40 44.65 1.0619411478528673 1.2026344059637872 0.040073445456038595}]"}
+{"level":"info","time":1688311397883144600,"caller":"hilMock.go:151","message":"[{19.83 15.34 16.22 10.4 62 49.33 1.350253206141795 1.045495177952853 0.43322304543728063}]"}
+{"level":"info","time":1688311398506773200,"caller":"hilMock.go:108","message":"Finish simulation"}
+{"level":"info","time":1688311398507297200,"caller":"hilMock.go:57","message":"IDLE"}

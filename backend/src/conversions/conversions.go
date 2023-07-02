@@ -11,7 +11,7 @@ import (
 	trace "github.com/rs/zerolog/log"
 )
 
-const VEHICLE_STATE_LENGTH = 25
+const VEHICLE_STATE_LENGTH = 65
 
 func GetVehicleState(data []byte) models.VehicleState {
 	reader := bytes.NewReader(data)
@@ -43,12 +43,23 @@ func ConvertFloat64ToBytes(num float64) [8]byte {
 
 func GetBytesFromVehicleState(vehicleState models.VehicleState) []byte {
 
-	buf1 := ConvertFloat64ToBytes(vehicleState.YDistance)
-	buf2 := ConvertFloat64ToBytes(vehicleState.Current)
-	var buf3 [1]byte = [1]byte{vehicleState.Duty}
-	buf4 := ConvertFloat64ToBytes(vehicleState.Temperature)
+	buf1 := ConvertFloat64ToBytes(vehicleState.XDistance)
+	buf2 := ConvertFloat64ToBytes(vehicleState.YDistance)
+	buf3 := ConvertFloat64ToBytes(vehicleState.ZDistance)
 
-	return append(append(append(buf1[:], buf2[:]...), buf3[:]...), buf4[:]...)
+	result := append(append(buf1[:], buf2[:]...), buf3[:]...)
+
+	buf4 := ConvertFloat64ToBytes(vehicleState.Current)
+	var buf5 [1]byte = [1]byte{vehicleState.Duty}
+	buf6 := ConvertFloat64ToBytes(vehicleState.Temperature)
+
+	result = append(append(append(result, buf4[:]...), buf5[:]...), buf6[:]...)
+
+	buf7 := ConvertFloat64ToBytes(vehicleState.XRotation)
+	buf8 := ConvertFloat64ToBytes(vehicleState.YRotation)
+	buf9 := ConvertFloat64ToBytes(vehicleState.ZRotation)
+
+	return append(append(append(result, buf7[:]...), buf8[:]...), buf9[:]...)
 }
 
 func GetAllBytesFromVehiclesState(vehiclesState []models.VehicleState) []byte {

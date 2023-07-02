@@ -31,6 +31,8 @@ export function VehicleRepresentation({ yDistance }: Props) {
 
     const [springProps, setSpringProps] = useSpring(() => ({
         positionY: 0,
+        rotationY: 0,
+        //meshRef: meshRef.current,
         config: {
             mass: 1,
             tension: 15,
@@ -46,11 +48,13 @@ export function VehicleRepresentation({ yDistance }: Props) {
         meshRef.current.rotation.y = amplitude * Math.sin(t * timeScale);
         meshRef.current.rotation.z = amplitude * Math.cos(t * timeScale);
         meshRef.current.rotation.x = amplitude * Math.sin(t * timeScale);
+        //meshRef.current.rotation.x += 0.01;
     });
 
     useEffect(() => {
         positionYRef.current = calculatePositionY(yDistance);
-        setSpringProps({ positionY: positionYRef.current });
+        setSpringProps({ positionY: positionYRef.current, rotationY: 2 });
+        meshRef.current.rotation.y += 0.5;
     }, [yDistance]);
 
     return (
@@ -58,6 +62,8 @@ export function VehicleRepresentation({ yDistance }: Props) {
             scale={3}
             ref={meshRef}
             position-y={springProps.positionY}
+            //rotateY={meshRef.current.rotation.y}
+            //rotation={[1, 0, 0]}
         >
             <primitive object={model.scene} />
         </animated.mesh>

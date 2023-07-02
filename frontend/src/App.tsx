@@ -20,10 +20,15 @@ const START_SIMULATION = "start_simulation";
 const FINISH_SIMULTATION = "finish_simulation";
 
 export type VehicleState = {
+    xDistance: number;
     yDistance: number;
+    zDistance: number;
     current: number;
     duty: number;
     temperature: number;
+    xRotation: number;
+    yRotation: number;
+    zRotation: number;
 };
 
 function App() {
@@ -31,7 +36,12 @@ function App() {
         current: 0,
         duty: 0,
         temperature: 0,
+        xDistance: 0,
         yDistance: 0,
+        zDistance: 0,
+        xRotation: 0,
+        yRotation: 0,
+        zRotation: 0,
     } as VehicleState);
 
     const [simulationStarted, setSimulationStarted] = useState<boolean>(false);
@@ -46,11 +56,11 @@ function App() {
     useEffect(() => {
         if (lastJsonMessage !== null) {
             const newVehicleState = lastJsonMessage as VehicleState;
+            console.log(newVehicleState);
             if (newVehicleState.duty >= 0 && newVehicleState.duty < 256) {
                 setVehicleState(newVehicleState);
             }
         }
-        console.log(simulationStarted);
     }, [lastJsonMessage]);
 
     return (
