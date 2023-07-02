@@ -94,7 +94,7 @@ func (hilMock *HilMock) readOrdersBackend(ctx context.Context, errChan chan<- er
 	go func() {
 		for {
 			select {
-			case <-ctx.Done(): //FIXME: Make sure this part is run
+			case <-ctx.Done():
 				return
 			default:
 				_, msg, err := hilMock.backConn.ReadMessage()
@@ -147,7 +147,7 @@ func (hilMock *HilMock) sendVehicleState(ctx context.Context, errChan chan<- err
 			case <-ticker.C:
 				vehiclesState := []VehicleState{}
 				vehicleState := RandomVehicleState()
-				vehiclesState = append(vehiclesState, vehicleState) //FIXME: As an array?
+				vehiclesState = append(vehiclesState, vehicleState)
 				trace.Info().Msg(fmt.Sprint(vehiclesState))
 				head := make([]byte, 2)
 				binary.LittleEndian.PutUint16(head, VEHICLE_STATE_ID)
@@ -162,7 +162,6 @@ func (hilMock *HilMock) sendVehicleState(ctx context.Context, errChan chan<- err
 					errChan <- err
 					return
 				}
-				//FIXME: Add default?
 			}
 		}
 	}()

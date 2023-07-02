@@ -169,7 +169,7 @@ func (hilHandler *HilHandler) startListeningOrders(orderChan chan<- models.Order
 				stringMsg := string(msg)
 				if errReadJSON != nil || stringMsg == FINISH_SIMULATION {
 					if errReadJSON != nil {
-						trace.Error().Err(errReadJSON).Msg("Error reading message from frontend") //FIXME: Send FINISH_SIMULATION
+						trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
 					}
 
 					trace.Info().Msg("Finish simulation")

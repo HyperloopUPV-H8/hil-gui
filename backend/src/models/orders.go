@@ -9,7 +9,7 @@ const FRONT_ORDER_ID = 2
 const CONTROL_ORDER_ID = 3
 
 type Order interface {
-	Bytes() []byte //FIXME: Add read? And pass as a pointer
+	Bytes() []byte
 }
 
 type FormOrder struct {

@@ -131,18 +131,15 @@ export default App;
 function sendPlayButtonEvent(
     ev: SimulationEvent,
     sendMessage: SendMessage | undefined
-    // changeState: (playButtons: PlayButtons) => void
 ) {
     switch (ev.kind) {
         case "play":
             console.log(START_SIMULATION);
             sendMsgSimultation(sendMessage!, START_SIMULATION);
-            //changeState({ play: !state, stop: state }); TODO: Change state
             break;
         case "stop":
             console.log(FINISH_SIMULTATION);
             sendMsgSimultation(sendMessage!, FINISH_SIMULTATION);
-            //changeState({ play: state, stop: !state }); TODO: Change state
             break;
     }
 }

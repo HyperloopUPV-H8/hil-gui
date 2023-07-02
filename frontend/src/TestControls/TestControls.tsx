@@ -1,18 +1,9 @@
-//import { PlayButton } from "common/dist/components";
-import { PlayButton } from "common"; //FIXME
+import { PlayButton } from "common";
 import style from "./TestControls.module.scss";
-// import { useControlForm } from "./useControlForm";
-// import { initialFormDescription } from "./initialFormDataMock";
 import { ControlButtons } from "./ControlButtons/ControlButtons";
 import { PerturbationButtons } from "./InstructionButtons/InstructionButtons";
 import { useEffect, useState } from "react";
 import { ControlEvent, ControlOrder, SimulationEvent } from "./types";
-
-// type Props = {
-//     sendJsonMessage: SendJsonMessage;
-//     sendMessage: SendMessage;
-//     lastMessage: MessageEvent<any> | null;
-// };
 
 type Props = {
     onSimulationClick: (ev: SimulationEvent) => void;

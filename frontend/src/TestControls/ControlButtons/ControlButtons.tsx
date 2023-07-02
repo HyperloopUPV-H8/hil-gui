@@ -13,19 +13,16 @@ export const ControlButtons = ({ onClick }: Props) => {
     return (
         <div className={style.controlsWrapper}>
             <ToggleButton
-                //id={0}
                 label="Levitate"
                 icon={<LevitateIcon />}
                 onClick={(state) => onClick({ kind: "levitate", state })}
             />
             <ToggleButton
-                //id={1}
                 label="Accelerate"
                 icon={<PropulseIcon />}
                 onClick={(state) => onClick({ kind: "accelerate", state })}
             />
             <ToggleButton
-                //id={2}
                 label="Brake"
                 icon={<BreakIcon />}
                 onClick={(state) => onClick({ kind: "brake", state })}
