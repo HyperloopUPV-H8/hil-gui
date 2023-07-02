@@ -1,20 +1,22 @@
 import { VehicleState } from "App";
 import { LineDescription, LinesChart, useGlobalTicker } from "common";
 import { useEffect, useState } from "react";
+import style from "./ChartSection.module.scss";
 
 type Props = {
     info: VehicleState;
 };
 
+const palette = ["#EE8735", "#51C6EB", "#7BEE35"];
+
 const startTimestamp = performance.now();
 
 function getSineValue() {
     const elapsed = performance.now() - startTimestamp;
-    const frequency = 0.5; // Ajusta la frecuencia de la curva senoidal
-    const amplitude = 50; // Ajusta la amplitud de la curva senoidal
-    const offset = 50; // Ajusta el desplazamiento vertical de la curva senoidal
+    const frequency = 0.5;
+    const amplitude = 50;
+    const offset = 50;
 
-    // Calcula el valor senoidal
     const value = Math.sin((elapsed * frequency) / 1000) * amplitude + offset;
 
     return value;
@@ -23,24 +25,39 @@ function getSineValue() {
 function createLineDescriptionArray(info: VehicleState): LineDescription[] {
     let result: LineDescription[] = [];
     let attribute: keyof typeof info;
+    let colorIndex = 0;
     for (attribute in info) {
-        result.push(createSingleLineDescription(attribute, info[attribute]));
+        result.push(
+            createSingleLineDescription(attribute, info[attribute], colorIndex)
+        );
+        colorIndex++;
     }
     return result;
 }
 
 function createSingleLineDescription(
     attribute: string,
-    value: number
+    value: number,
+    colorIndex: number
 ): LineDescription {
     return {
         id: attribute,
-        color: "red",
-        range: [0, 100],
+        name: attribute,
+        color: palette[colorIndex % palette.length],
+        range: getRange(attribute),
         getUpdate: () => {
             return value;
         },
     };
+}
+
+function getRange(attribute: string): [number | null, number | null] {
+    switch (attribute) {
+        case "yDistance":
+            return [0, 50];
+        default:
+            return [0, 100];
+    }
 }
 
 export function ChartSection({ info }: Props) {
@@ -54,20 +71,19 @@ export function ChartSection({ info }: Props) {
 
     return (
         <>
-            {lineDescArray.length == 0 ? ( //TODO: This condition has changed
-                <div>Waiting for starting simulation...</div>
-            ) : (
-                Object.entries(lineDescArray).map(([_, lineDesc]) => {
-                    return (
+            {Object.entries(lineDescArray).map(([_, lineDesc]) => {
+                return (
+                    <div className={style.chart}>
                         <LinesChart
                             divisions={6}
                             showGrid={true}
                             items={[lineDesc]}
                             length={1000}
                         ></LinesChart>
-                    );
-                })
-            )}
+                        <div className={style.legend}>{lineDesc.name}</div>
+                    </div>
+                );
+            })}
         </>
     );
 }

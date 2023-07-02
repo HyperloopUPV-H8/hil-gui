@@ -34,6 +34,8 @@ function App() {
         yDistance: 0,
     } as VehicleState);
 
+    const [simulationStarted, setSimulationStarted] = useState<boolean>(false);
+
     const { sendMessage, sendJsonMessage, lastMessage, lastJsonMessage } =
         useWebSocket(WEBSOCKET_URL, {
             shouldReconnect: () => {
@@ -48,6 +50,7 @@ function App() {
                 setVehicleState(newVehicleState);
             }
         }
+        console.log(simulationStarted);
     }, [lastJsonMessage]);
 
     return (
@@ -85,6 +88,15 @@ function App() {
                         }}
                         onSimulationClick={(ev) => {
                             sendPlayButtonEvent(ev, sendMessage);
+                            if (ev.kind == "play" && !ev.state) {
+                                setSimulationStarted(true);
+                                console.log("executed V");
+                            }
+                            //FIXME: when stop simulation, freeze the graphics
+                            //else if (ev.kind == "stop" && !ev.state) {
+                            //     setSimulationStarted(false);
+                            //     console.log("executed F");
+                            // }
                         }}
                         lastMessage={lastMessage}
                     />
@@ -101,7 +113,13 @@ function App() {
                     </div>
                 </div>
                 <div className={style.graphics}>
-                    <ChartSection info={vehicleState} />
+                    {simulationStarted ? (
+                        <ChartSection info={vehicleState} />
+                    ) : (
+                        <div className={style.noCharts}>
+                            Waiting for starting simulation...
+                        </div>
+                    )}
                 </div>
             </div>
         </main>
