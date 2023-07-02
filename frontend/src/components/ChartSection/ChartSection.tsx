@@ -79,6 +79,7 @@ export function ChartSection({ info }: Props) {
                             showGrid={true}
                             items={[lineDesc]}
                             length={1000}
+                            className={style.maxSize}
                         ></LinesChart>
                         <div className={style.legend}>{lineDesc.name}</div>
                     </div>

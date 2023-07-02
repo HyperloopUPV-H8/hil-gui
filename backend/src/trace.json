@@ -1,9 +1,11 @@
-{"level":"info","time":1688303222576737800,"caller":"main.go:70","message":"Listening in 127.0.0.1:8010/backend"}
-{"level":"info","time":1688303222677737000,"caller":"main.go:54","message":"HIL connected: &{<nil> 0xc0000b6160} 127.0.0.2:55579"}
-{"level":"info","time":1688303223703516700,"caller":"main.go:47","message":"Frontened connected: &{0xc0000b62c0 0xc0000b6160} 127.0.0.1:55580"}
-{"level":"info","time":1688303223704715300,"caller":"hilHandler.go:41","message":"IDLE"}
-{"level":"info","time":1688303234559799200,"caller":"hilHandler.go:104","message":"Simulation state"}
-{"level":"warn","time":1688303234578335000,"caller":"hilHandler.go:189","message":"It is not an order"}
-{"level":"info","time":1688303240325049900,"caller":"hilHandler.go:175","message":"Finish simulation"}
-{"level":"info","time":1688303240326053300,"caller":"hilHandler.go:69","message":"IDLE"}
-{"level":"info","time":1688303240332171500,"caller":"hilHandler.go:214","message":"HIL received finish simulation"}
+{"level":"info","time":1688305552461164100,"caller":"main.go:70","message":"Listening in 127.0.0.1:8010/backend"}
+{"level":"info","time":1688305555421440800,"caller":"main.go:47","message":"Frontened connected: &{0xc0000ca000 <nil>} 127.0.0.1:56254"}
+{"level":"info","time":1688305576127460200,"caller":"main.go:54","message":"HIL connected: &{0xc0000ca000 0xc0000ca2c0} 127.0.0.2:56257"}
+{"level":"info","time":1688305576130662900,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"error","error":"websocket: close 1001 (going away)","time":1688305582023766600,"caller":"hilHandler.go:51","message":"error receiving message in IDLE"}
+{"level":"warn","time":1688305582025020900,"caller":"main.go:64","message":"Exit IDLE, waiting for connections"}
+{"level":"info","time":1688305582632878400,"caller":"main.go:47","message":"Frontened connected: &{0xc000190000 0xc0000ca2c0} 127.0.0.1:56263"}
+{"level":"info","time":1688305582634550900,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"info","time":1688305582643176200,"caller":"main.go:47","message":"Frontened connected: &{0xc0000ca420 0xc0000ca2c0} 127.0.0.1:56264"}
+{"level":"info","time":1688305582646040800,"caller":"hilHandler.go:41","message":"IDLE"}
+{"level":"info","time":1688305584583583400,"caller":"hilHandler.go:104","message":"Simulation state"}
