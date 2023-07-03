@@ -36,7 +36,7 @@ func RandomVehicleState() VehicleState {
 }
 
 func getRandomRotation() float64 {
-	return math.Round(float64((rand.Float64()-0.5)*(math.Pi/4))*100) / 100
+	return math.Round(float64((rand.Float64()-0.5)*(math.Pi/8))*100) / 100
 }
 
 func GetAllVehicleStates(data []byte) ([]VehicleState, error) {

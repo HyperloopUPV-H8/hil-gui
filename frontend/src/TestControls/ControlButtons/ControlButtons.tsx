@@ -7,25 +7,29 @@ import { ControlEvent } from "TestControls/types";
 
 type Props = {
     onClick: (ev: ControlEvent) => void;
+    disabled: boolean;
 };
 
-export const ControlButtons = ({ onClick }: Props) => {
+export const ControlButtons = ({ onClick, disabled }: Props) => {
     return (
         <div className={style.controlsWrapper}>
             <ToggleButton
                 label="Levitate"
                 icon={<LevitateIcon />}
                 onClick={(state) => onClick({ kind: "levitate", state })}
+                disabled={disabled}
             />
             <ToggleButton
                 label="Accelerate"
                 icon={<PropulseIcon />}
                 onClick={(state) => onClick({ kind: "accelerate", state })}
+                disabled={disabled}
             />
             <ToggleButton
                 label="Brake"
                 icon={<BreakIcon />}
                 onClick={(state) => onClick({ kind: "brake", state })}
+                disabled={disabled}
             />
         </div>
     );

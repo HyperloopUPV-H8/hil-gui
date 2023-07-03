@@ -10,6 +10,7 @@ type Props = {
     onControlClick: (ev: ControlEvent) => void;
     onPerturbationClick: (ev: ControlOrder) => void;
     lastMessage: MessageEvent<any> | null;
+    simulationStarted: boolean;
 };
 
 export type PlayButtons = {
@@ -24,6 +25,7 @@ export const TestControls = ({
     onControlClick,
     onPerturbationClick,
     lastMessage,
+    simulationStarted,
 }: Props) => {
     const [buttonsState, setButtonsState] = useState<PlayButtons>({
         play: false,
@@ -87,9 +89,13 @@ export const TestControls = ({
             <div className={style.sectionWrapper}>
                 <div className={style.title}>Controls</div>
                 <div className={style.body}>
-                    <ControlButtons onClick={(ev) => onControlClick(ev)} />
+                    <ControlButtons
+                        onClick={(ev) => onControlClick(ev)}
+                        disabled={!simulationStarted}
+                    />
                     <PerturbationButtons
                         onClick={(ev) => onPerturbationClick(ev)}
+                        disabled={!simulationStarted}
                     />
                 </div>
             </div>

@@ -120,9 +120,9 @@ export function ChartSection({ info }: Props) {
                     </div>
                 </li>
             </ul>
-            {Object.entries(lineDescArray).map(([_, lineDesc]) => {
+            {Object.entries(lineDescArray).map(([name, lineDesc]) => {
                 return (
-                    <div className={style.chart}>
+                    <div key={name} className={style.chart}>
                         <LinesChart
                             divisions={6}
                             showGrid={true}

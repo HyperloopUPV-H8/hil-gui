@@ -44,6 +44,7 @@ function App() {
         zRotation: 0,
     } as VehicleState);
 
+    const [firstSimlutaion, setFirstSimulation] = useState<boolean>(false);
     const [simulationStarted, setSimulationStarted] = useState<boolean>(false);
 
     const { sendMessage, sendJsonMessage, lastMessage, lastJsonMessage } =
@@ -71,6 +72,7 @@ function App() {
             <div className={style.testingPageWrapper}>
                 <div className={style.podRepresentation}>
                     <TestControls
+                        simulationStarted={simulationStarted}
                         onControlClick={(ev) => {
                             let numericId = -1;
                             switch (ev.kind) {
@@ -98,14 +100,13 @@ function App() {
                         onSimulationClick={(ev) => {
                             sendPlayButtonEvent(ev, sendMessage);
                             if (ev.kind == "play" && !ev.state) {
+                                setFirstSimulation(true);
                                 setSimulationStarted(true);
-                                console.log("executed V");
                             }
                             //FIXME: when stop simulation, freeze the graphics
-                            //else if (ev.kind == "stop" && !ev.state) {
-                            //     setSimulationStarted(false);
-                            //     console.log("executed F");
-                            // }
+                            else if (ev.kind == "stop" && !ev.state) {
+                                setSimulationStarted(false);
+                            }
                         }}
                         lastMessage={lastMessage}
                     />
@@ -120,7 +121,7 @@ function App() {
                     </div>
                 </div>
                 <div className={style.graphics}>
-                    {simulationStarted ? (
+                    {firstSimlutaion ? (
                         <ChartSection info={vehicleState} />
                     ) : (
                         <div className={style.noCharts}>
