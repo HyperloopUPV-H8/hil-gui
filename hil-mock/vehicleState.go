@@ -29,10 +29,14 @@ func RandomVehicleState() VehicleState {
 	VehicleState.Current = float64(rand.Intn(20)) + (math.Round(rand.Float64()*100) / 100)
 	VehicleState.Duty = byte(rand.Intn(100))
 	VehicleState.Temperature = float64(rand.Intn(40)+20) + (math.Round(rand.Float64()*100) / 100)
-	VehicleState.XRotation = float64(rand.Float64()*(math.Pi/4)) + (math.Round(rand.Float64()*100) / 100)
-	VehicleState.YRotation = float64(rand.Float64()*(math.Pi/4)) + (math.Round(rand.Float64()*100) / 100)
-	VehicleState.ZRotation = float64(rand.Float64()*(math.Pi/4)) + (math.Round(rand.Float64()*100) / 100)
+	VehicleState.XRotation = getRandomRotation()
+	VehicleState.YRotation = getRandomRotation()
+	VehicleState.ZRotation = getRandomRotation()
 	return *VehicleState
+}
+
+func getRandomRotation() float64 {
+	return math.Round(float64((rand.Float64()-0.5)*(math.Pi/4))*100) / 100
 }
 
 func GetAllVehicleStates(data []byte) ([]VehicleState, error) {

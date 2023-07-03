@@ -27,10 +27,19 @@ function createLineDescriptionArray(info: VehicleState): LineDescription[] {
     let attribute: keyof typeof info;
     let colorIndex = 0;
     for (attribute in info) {
-        result.push(
-            createSingleLineDescription(attribute, info[attribute], colorIndex)
-        );
-        colorIndex++;
+        if (
+            !attribute.endsWith("Rotation") &&
+            !attribute.endsWith("Distance")
+        ) {
+            result.push(
+                createSingleLineDescription(
+                    attribute,
+                    info[attribute],
+                    colorIndex
+                )
+            );
+            colorIndex++;
+        }
     }
     return result;
 }
@@ -52,9 +61,9 @@ function createSingleLineDescription(
 }
 
 function getRange(attribute: string): [number | null, number | null] {
-    switch (attribute) {
-        case "yDistance":
-            return [0, 50];
+    switch (true) {
+        case attribute.endsWith("Distance"):
+            return [0, 30];
         default:
             return [0, 100];
     }
@@ -71,6 +80,46 @@ export function ChartSection({ info }: Props) {
 
     return (
         <>
+            <ul className={style.list}>
+                <li>
+                    <div className={style.attributeList}>xDistance</div>
+                    <div className={style.num}>
+                        {info.xDistance.toFixed(2)} mm
+                    </div>
+                </li>
+                <li>
+                    <div className={style.attributeList}>yDistance</div>
+                    <div className={style.num}>
+                        {info.yDistance.toFixed(2)} mm
+                    </div>
+                </li>
+                <li>
+                    <div className={style.attributeList}>zDistance</div>
+                    <div className={style.num}>
+                        {info.zDistance.toFixed(2)} mm
+                    </div>
+                </li>
+            </ul>
+            <ul className={style.list}>
+                <li>
+                    <div className={style.attributeList}>xRotation</div>
+                    <div className={style.num}>
+                        {info.xRotation.toFixed(2)} rad
+                    </div>
+                </li>
+                <li>
+                    <div className={style.attributeList}>yRotation</div>
+                    <div className={style.num}>
+                        {info.yRotation.toFixed(2)} rad
+                    </div>
+                </li>
+                <li>
+                    <div className={style.attributeList}>zRotation</div>
+                    <div className={style.num}>
+                        {info.zRotation.toFixed(2)} rad
+                    </div>
+                </li>
+            </ul>
             {Object.entries(lineDescArray).map(([_, lineDesc]) => {
                 return (
                     <div className={style.chart}>

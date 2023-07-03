@@ -56,7 +56,6 @@ function App() {
     useEffect(() => {
         if (lastJsonMessage !== null) {
             const newVehicleState = lastJsonMessage as VehicleState;
-            console.log(newVehicleState);
             if (newVehicleState.duty >= 0 && newVehicleState.duty < 256) {
                 setVehicleState(newVehicleState);
             }
@@ -112,9 +111,7 @@ function App() {
                     />
                     <div className={style.threeJSAndInfo}>
                         <div className={style.threeJS}>
-                            <ThreeJsVehicle
-                                yDistance={vehicleState.yDistance}
-                            />
+                            <ThreeJsVehicle info={vehicleState} />
                         </div>
 
                         <div className={style.info}>
