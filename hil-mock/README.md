@@ -15,12 +15,17 @@ Prepared to send the identifier and several structs in the same msg
 1. VehicleState: 2 first bytes identify the struct: VEHICLE_STATE_ID = 1
 
 ```go
-   type VehicleState struct {
-   YDistance float64 `json:"yDistance"` //It goes between 22mm and 10 mm
-   Current float64 `json:"current"`
-   Duty byte `json:"duty"`
-   Temperature float64 `json:"temperature"`
-   }
+type VehicleState struct {
+	XDistance   float64 `json:"xDistance"`
+	YDistance   float64 `json:"yDistance"` //Value between 22mm and 10 mm
+	ZDistance   float64 `json:"zDistance"`
+	Current     float64 `json:"current"`
+	Duty        byte    `json:"duty"`
+	Temperature float64 `json:"temperature"`
+	XRotation   float64 `json:"xRotation"`
+	YRotation   float64 `json:"yRotation"`
+	ZRotation   float64 `json:"zRotation"`
+}
 ```
 
 Structs received in []byte:
