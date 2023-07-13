@@ -17,6 +17,7 @@
         "common": "file:../../common-front",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-icons": "^4.10.1",
         "react-use-websocket": "^3.0.0",
         "three": "^0.153.0",
         "vite-tsconfig-paths": "^4.2.0"

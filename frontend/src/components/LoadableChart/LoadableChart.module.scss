@@ -1,0 +1,22 @@
+.loadableChart {
+    background-color: var(--primary-99);
+    border-radius: 0.5rem;
+    overflow: hidden;
+
+    position: relative;
+    padding: 0.8rem 0.5rem;
+}
+
+.linesChart {
+    flex: 1 1 0;
+}
+
+.loadingFallback {
+    position: absolute;
+    z-index: 1;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: red;
+}

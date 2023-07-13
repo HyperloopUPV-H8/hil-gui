@@ -1,0 +1,11 @@
+.tagsSection {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-auto-rows: min-content;
+    align-content: space-between;
+    gap: 1.5rem;
+
+    background-color: var(--primary-99);
+    padding: 1rem;
+    border-radius: 1rem;
+}

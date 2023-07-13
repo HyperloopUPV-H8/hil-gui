@@ -1,7 +1,7 @@
 import { Grid, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { VehicleRepresentation } from "./VehicleRepresentation/VehicleRepresentation";
-import { VehicleState } from "App";
+import { VehicleState } from "home/VehicleSimulation/VehicleSimulation";
 
 type Props = {
     info: VehicleState;
@@ -10,7 +10,11 @@ type Props = {
 export function ThreeJsVehicle({ info }: Props) {
     return (
         <Canvas>
-            <PerspectiveCamera makeDefault position={[7, 5, 6]} fov={60} />
+            <PerspectiveCamera
+                makeDefault
+                position={[7, 5, 6]}
+                fov={60}
+            />
             <OrbitControls />
             <ambientLight intensity={0.1} />
             <directionalLight

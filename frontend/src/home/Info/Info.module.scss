@@ -1,0 +1,20 @@
+.info {
+    display: grid;
+    grid-template:
+        "3dView tags" 1.5fr
+        "charts charts" 1fr / 1fr auto;
+
+    gap: 1.5rem;
+
+    > :nth-child(1) {
+        grid-area: 3dView;
+    }
+
+    > :nth-child(2) {
+        grid-area: tags;
+    }
+
+    > :nth-child(3) {
+        grid-area: charts;
+    }
+}
