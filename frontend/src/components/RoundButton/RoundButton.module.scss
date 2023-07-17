@@ -19,6 +19,7 @@ $icon-size: 0.7rem;
 
     transition: all 30ms ease-out;
 
+    cursor: pointer;
     &:active {
         box-shadow: none;
         transform: translateY(0);

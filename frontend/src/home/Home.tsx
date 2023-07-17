@@ -7,10 +7,8 @@ import { ControlOrder, SimulationEvent } from "./Controls/types";
 import { Controls } from "./Controls/Controls";
 import { Info } from "./Info/Info";
 import { VehicleState } from "models/vehicle";
+import { useBackend } from "./useBackend";
 
-const SERVER_URL = "127.0.0.1:8010/backend";
-
-const WEBSOCKET_URL = `ws://${SERVER_URL}`; //FIXME:
 const START_SIMULATION = "start_simulation";
 const FINISH_SIMULTATION = "finish_simulation";
 
@@ -30,12 +28,8 @@ export const Home = () => {
     const [firstSimulation, setFirstSimulation] = useState<boolean>(false);
     const [simulationStarted, setSimulationStarted] = useState<boolean>(false);
 
-    const { sendMessage, sendJsonMessage, lastMessage, lastJsonMessage } =
-        useWebSocket(WEBSOCKET_URL, {
-            shouldReconnect: () => {
-                return true;
-            },
-        });
+    const { lastJsonMessage, lastMessage, sendJsonMessage, sendMessage } =
+        useBackend();
 
     useEffect(() => {
         if (lastJsonMessage !== null) {
