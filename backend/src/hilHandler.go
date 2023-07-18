@@ -7,7 +7,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/HyperloopUPV-H8/hil-gui/backend/models"
@@ -17,6 +16,11 @@ import (
 	"github.com/gorilla/websocket"
 	trace "github.com/rs/zerolog/log"
 )
+
+type BackendMessage struct {
+	Type    string          `json:"type"`
+	Payload json.RawMessage `json:"payload"`
+}
 
 type Id uint16
 
@@ -163,15 +167,21 @@ func (hilHandler *HilHandler) startListeningOrders(orderChan chan<- models.Order
 			return
 		default:
 			_, buf, errReadJSON := hilHandler.frontConn.ReadMessage()
+			if errReadJSON != nil {
+				trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
+			}
 			msg, err := hilHandler.parseFrontMessage(buf)
 
 			if err != nil {
 				trace.Error().Err(err)
+				errChan <- err
+				//FIXME: Return?
 				continue
 			}
 
-			switch msg.(type) {
+			switch typedMsg := msg.(type) {
 			case FinishSimulationFront:
+				trace.Info().Msg("Finish simulation")
 				err := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, FinishSimulationFront{}.Encode())
 				if err != nil {
 					trace.Error().Err(err).Msg("Error sending finish simulation to HIL")
@@ -179,31 +189,37 @@ func (hilHandler *HilHandler) startListeningOrders(orderChan chan<- models.Order
 				}
 
 				stopChan <- struct{}{}
+				return
+			case StartSimulationFront:
+				trace.Warn().Msg("simulation already initializated")
+			case models.ControlOrder:
+				orderChan <- typedMsg
 			default:
 				trace.Warn().Msg("front message not recognized")
 			}
 
-			if errReadJSON != nil || stringMsg == FinishSimulation {
-				if errReadJSON != nil {
-					trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
-				}
+			//if errReadJSON != nil || stringMsg == FinishSimulation {
+			// if errReadJSON != nil {
+			// 	trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
+			// }
 
-				trace.Info().Msg("Finish simulation")
-				errStoping := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, FinishSimulationHil{}.Encode())
-				if errStoping != nil {
-					trace.Error().Err(errStoping).Msg("Error sending finish simulation to HIL")
-					errChan <- errStoping
-				}
+			// // trace.Info().Msg("Finish simulation")
+			// // errStoping := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, FinishSimulationHil{}.Encode())
+			// // if errStoping != nil {
+			// // 	trace.Error().Err(errStoping).Msg("Error sending finish simulation to HIL")
+			// // 	errChan <- errStoping
+			// // }
 
-				if errReadJSON != nil {
-					errChan <- errReadJSON
-				} else {
-					stopChan <- struct{}{}
-				}
-				return
-			} else if !addOrderToChan(msg, orderChan) {
-				trace.Warn().Msg("It is not an order")
-			}
+			// if errReadJSON != nil {
+			// 	errChan <- errReadJSON
+			// } else {
+			// 	stopChan <- struct{}{}
+			// }
+			//return
+			//} else
+			// if !addOrderToChan(msg, orderChan) {
+			// 	trace.Warn().Msg("It is not an order")
+			// }
 
 		}
 
@@ -266,11 +282,41 @@ func (hilHandler *HilHandler) parseHilMessage(msg []byte) (any, error) {
 }
 
 func (hilHandler *HilHandler) parseFrontMessage(msg []byte) (any, error) {
-	if string(msg) == StartSimulationMsg {
+	// if string(msg) == StartSimulationMsg {
+	// 	return StartSimulationFront{}, nil
+	// } else {
+	// 	return nil, errors.New("unrecognized front message")
+	// }
+	var backendMessage BackendMessage
+	err := json.Unmarshal(msg, backendMessage)
+	if err != nil {
+		return nil, errors.New("error unmarshalling front message")
+	}
+
+	switch backendMessage.Type {
+	case "control_order":
+		var controlOrder models.ControlOrder
+		err := json.Unmarshal(backendMessage.Payload, controlOrder)
+		if err != nil {
+			return nil, errors.New("error unmarshalling front control order")
+		}
+		return controlOrder, nil
+	case "start_simulation":
 		return StartSimulationFront{}, nil
-	} else {
+	case "finish_simulation":
+		return FinishSimulationFront{}, nil
+	default:
 		return nil, errors.New("unrecognized front message")
 	}
+
+	// switch string(msg) {
+	// case StartSimulationMsg:
+	// 	return StartSimulationFront{}, nil
+	// case FinishSimulationFrontMsg:
+	// 	return FinishSimulationFront{}, nil
+	// default:
+	// 	return nil, errors.New("unrecognized front message")
+	// }
 }
 
 func getId(msg []byte) Id {
@@ -311,28 +357,28 @@ func prepareFormOrder(msg []byte, orderChan chan<- models.Order) error {
 	return nil
 }
 
-func addOrderToChan(msg []byte, orderChan chan<- models.Order) bool {
-	stringMsg := string(msg)
-	if strings.HasPrefix(stringMsg, "{\"id\":") {
-		var order models.ControlOrder = models.ControlOrder{}
-		errJSON := json.Unmarshal(msg, &order)
-		if errJSON != nil {
-			trace.Error().Err(errJSON).Msg("Error unmarshalling Control Order")
-			return true
-		}
-		orderChan <- order
-	} else if strings.HasPrefix(stringMsg, "[{\"id\":") {
-		errJSON := prepareFormOrder(msg, orderChan)
-		if errJSON != nil {
-			trace.Error().Err(errJSON).Msg("Error unmarshalling Form Data")
-			return true
-		}
-	} else {
-		return false
-	}
-	return true
+// func addOrderToChan(msg []byte, orderChan chan<- models.Order) bool {
+// 	stringMsg := string(msg)
+// 	if strings.HasPrefix(stringMsg, "{\"id\":") {
+// 		var order models.ControlOrder = models.ControlOrder{}
+// 		errJSON := json.Unmarshal(msg, &order)
+// 		if errJSON != nil {
+// 			trace.Error().Err(errJSON).Msg("Error unmarshalling Control Order")
+// 			return true
+// 		}
+// 		orderChan <- order
+// 	} else if strings.HasPrefix(stringMsg, "[{\"id\":") {
+// 		errJSON := prepareFormOrder(msg, orderChan)
+// 		if errJSON != nil {
+// 			trace.Error().Err(errJSON).Msg("Error unmarshalling Form Data")
+// 			return true
+// 		}
+// 	} else {
+// 		return false
+// 	}
+// 	return true
 
-}
+// }
 
 func (hilHandler *HilHandler) AreConnectionsReady() bool {
 	return hilHandler.frontConn != nil && hilHandler.hilConn != nil
