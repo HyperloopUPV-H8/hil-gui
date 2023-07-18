@@ -1,11 +1,12 @@
 package main
 
 import (
+	"bytes"
 	"context"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"strings"
 	"time"
 
@@ -17,23 +18,43 @@ import (
 	trace "github.com/rs/zerolog/log"
 )
 
-const START_SIMULATION = "start_simulation"
-const FINISH_SIMULATION = "finish_simulation"
+type Id uint16
 
 type HilHandler struct {
 	frontConn *websocket.Conn
 	hilConn   *websocket.Conn
+	decoders  map[Id]Decoder
 }
 
-func NewHilHandler() *HilHandler {
-	return &HilHandler{}
+const VehicleStateId = 1
+
+var hilDecorders map[Id]Decoder = map[Id]Decoder{
+	VehicleStateId: vehicleStateDecoder{},
+}
+
+func NewHilHandler() HilHandler {
+	return HilHandler{
+		decoders: hilDecorders,
+	}
 }
 
 func (hilHandler *HilHandler) SetFrontConn(conn *websocket.Conn) {
+	conn.SetCloseHandler(func(code int, text string) error {
+		trace.Warn().Msg("Frontend disconnected")
+		hilHandler.frontConn = nil
+		return nil
+	})
+
 	hilHandler.frontConn = conn
 }
 
 func (hilHandler *HilHandler) SetHilConn(conn *websocket.Conn) {
+	conn.SetCloseHandler(func(code int, text string) error {
+		trace.Warn().Msg("Hil disconnected")
+		hilHandler.hilConn = nil
+		return nil
+	})
+
 	hilHandler.hilConn = conn
 }
 
@@ -42,72 +63,66 @@ func (hilHandler *HilHandler) StartIDLE() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	for {
-		select {
-		case <-ctx.Done():
-			return
-		default:
-			_, msgByte, err := hilHandler.frontConn.ReadMessage()
-			if err != nil {
-				trace.Error().Err(err).Msg("error receiving message in IDLE")
-				cancel()
-				continue
-			}
-
-			msg := string(msgByte)
-			switch msg {
-			case START_SIMULATION:
-
-				errStartingHIL := hilHandler.informStartSimulation()
-				if errStartingHIL != nil {
-					trace.Error().Err(errStartingHIL).Msg("error informing HIL to start simulation")
-					cancel()
-					break
-				}
-
-				err := hilHandler.startSimulationState(ctx, cancel)
-				if err == nil {
-					trace.Info().Msg("IDLE")
-
-				} else if err != nil {
-					return
-				}
-			}
+		_, buf, err := hilHandler.frontConn.ReadMessage()
+		if err != nil {
+			trace.Error().Err(err).Msg("error receiving message in IDLE")
+			cancel()
+			continue
 		}
+
+		msg, err := hilHandler.parseFrontMessage(buf)
+
+		if err != nil {
+			trace.Error().Err(err).Msg("parsing message")
+			continue
+		}
+
+		switch msg.(type) {
+		case StartSimulationFront:
+			err := hilHandler.notifyHilStartSimulation()
+			if err != nil {
+				trace.Error().Err(err).Msg("notifiying HIL to start simulation")
+				cancel()
+				break
+			}
+
+			err = hilHandler.startSimulationState(ctx)
+			if err == nil {
+				trace.Info().Msg("IDLE")
+
+			} else if err != nil {
+				return
+			}
+		default:
+			trace.Warn().Type("unrecognized msg type", msg)
+		}
+
 	}
 }
 
-func (hilHandler *HilHandler) informStartSimulation() error {
-	errStarting := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, []byte(START_SIMULATION))
+func (hilHandler *HilHandler) notifyHilStartSimulation() error {
+	errStarting := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, StartSimulationFront{}.Encode())
 	if errStarting != nil {
 		trace.Error().Err(errStarting).Msg("Error sending message of starting simultaion to HIL")
 		return errStarting
 	}
-	_, msgByte, err := hilHandler.hilConn.ReadMessage()
-	if err != nil {
-		trace.Error().Err(err).Msg("error receiving message in IDLE")
-		return err
-	} else if string(msgByte) == START_SIMULATION {
-		return nil
-	} else {
-		errReceiving := errors.New("not received correct message from hil")
-		trace.Error().Err(errReceiving).Msg("error receiving message in IDLE")
-		return errReceiving
-	}
+
+	return nil
 }
 
-func (hilHandler *HilHandler) startSimulationState(ctx context.Context, cancel context.CancelFunc) error {
+func (hilHandler *HilHandler) startSimulationState(ctx context.Context) error {
 	errChan := make(chan error)
-	done := make(chan struct{})
 	dataChan := make(chan models.VehicleState)
 	orderChan := make(chan models.Order)
 	stopChan := make(chan struct{})
 	trace.Info().Msg("Simulation state")
 
-	hilHandler.startListeningData(dataChan, errChan, ctx, done)
-	hilHandler.startSendingData(dataChan, errChan, ctx, done)
+	simCtx, cancel := context.WithCancel(ctx)
 
-	hilHandler.startListeningOrders(orderChan, errChan, ctx, stopChan)
-	hilHandler.startSendingOrders(orderChan, errChan, ctx, done)
+	go hilHandler.startListeningData(dataChan, errChan, simCtx)
+	go hilHandler.startSendingData(dataChan, errChan, simCtx)
+	go hilHandler.startListeningOrders(orderChan, errChan, stopChan, simCtx)
+	go hilHandler.startSendingOrders(orderChan, errChan, simCtx)
 
 	for {
 		select {
@@ -115,148 +130,171 @@ func (hilHandler *HilHandler) startSimulationState(ctx context.Context, cancel c
 			cancel()
 			return err
 		case <-stopChan:
-			close(done)
+			cancel()
 			return nil
 		default:
+			time.Sleep(time.Millisecond * 100) // To avoid spinning loop
 		}
 	}
 }
 
-func (hilHandler *HilHandler) startSendingData(dataChan <-chan models.VehicleState, errChan chan<- error, ctx context.Context, done <-chan struct{}) {
-	go func() {
-		for {
-			select {
-			case <-done:
-				return
-			case <-ctx.Done():
-				return
-			case data := <-dataChan:
-				errMarshal := hilHandler.frontConn.WriteJSON(data)
-				if errMarshal != nil {
-					trace.Error().Err(errMarshal).Msg("Error marshalling")
-					errChan <- errMarshal
-					return
-				}
-			default:
-			}
-
-		}
-	}()
-}
-
-func (hilHandler *HilHandler) mockingSendVehicleState() {
-	ticker := time.NewTicker(2 * time.Second)
-	for range ticker.C {
-		vehicleState := models.RandomVehicleState()
-
-		errMarshal := hilHandler.frontConn.WriteJSON(vehicleState)
-
-		if errMarshal != nil {
-			log.Println("Error marshalling:", errMarshal)
+func (hilHandler *HilHandler) startSendingData(dataChan <-chan models.VehicleState, errChan chan<- error, ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
 			return
+		case data := <-dataChan:
+			err := hilHandler.frontConn.WriteJSON(data)
+			if err != nil {
+				trace.Error().Err(err).Msg("Error marshalling")
+				errChan <- err
+				return
+			}
+		default:
 		}
+
 	}
 }
 
-func (hilHandler *HilHandler) startListeningOrders(orderChan chan<- models.Order, errChan chan<- error, ctx context.Context, stopChan chan<- struct{}) {
-	go func() {
-		for {
-			select {
-			case <-ctx.Done():
-				return
-			default:
-				_, msg, errReadJSON := hilHandler.frontConn.ReadMessage()
-				stringMsg := string(msg)
-				if errReadJSON != nil || stringMsg == FINISH_SIMULATION {
-					if errReadJSON != nil {
-						trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
-					}
+func (hilHandler *HilHandler) startListeningOrders(orderChan chan<- models.Order, errChan chan<- error, stopChan chan<- struct{}, ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		default:
+			_, buf, errReadJSON := hilHandler.frontConn.ReadMessage()
+			msg, err := hilHandler.parseFrontMessage(buf)
 
-					trace.Info().Msg("Finish simulation")
-					errStoping := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, []byte(FINISH_SIMULATION))
-					if errStoping != nil {
-						trace.Error().Err(errStoping).Msg("Error sending finish simulation to HIL")
-						errChan <- errStoping
-					}
-
-					if errReadJSON != nil {
-						errChan <- errReadJSON
-					} else {
-						stopChan <- struct{}{}
-					}
-					return
-				} else if !addOrderToChan(msg, orderChan) {
-					trace.Warn().Msg("It is not an order")
-				}
-
+			if err != nil {
+				trace.Error().Err(err)
+				continue
 			}
 
-		}
-	}()
-}
-
-func (hilHandler *HilHandler) startListeningData(dataChan chan<- models.VehicleState, errChan chan<- error, ctx context.Context, done <-chan struct{}) {
-	go func() {
-		for {
-			select {
-			case <-done:
-				return
-			case <-ctx.Done():
-				return
-			default:
-				_, msg, err := hilHandler.hilConn.ReadMessage()
+			switch msg.(type) {
+			case FinishSimulationFront:
+				err := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, FinishSimulationFront{}.Encode())
 				if err != nil {
-					trace.Error().Err(err).Msg("Error reading message from HIL")
+					trace.Error().Err(err).Msg("Error sending finish simulation to HIL")
 					errChan <- err
-					break
-				}
-				if string(msg) == FINISH_SIMULATION {
-					trace.Info().Msg("HIL received finish simulation")
-					return
-				}
-				data, errDecoding := Decode(msg)
-				if errDecoding != nil {
-					trace.Error().Err(errDecoding).Msg(fmt.Sprintf("Error decoding: %v", errDecoding))
-					continue
 				}
 
-				switch decodedData := data.(type) {
-				case []models.VehicleState:
-					for _, d := range decodedData {
-						dataChan <- d
-					}
-				default:
-					trace.Warn().Msg(fmt.Sprintf("Does NOT match any type (startListeningData): %v", decodedData))
+				stopChan <- struct{}{}
+			default:
+				trace.Warn().Msg("front message not recognized")
+			}
+
+			if errReadJSON != nil || stringMsg == FinishSimulation {
+				if errReadJSON != nil {
+					trace.Error().Err(errReadJSON).Msg("Error reading message from frontend")
 				}
 
+				trace.Info().Msg("Finish simulation")
+				errStoping := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, FinishSimulationHil{}.Encode())
+				if errStoping != nil {
+					trace.Error().Err(errStoping).Msg("Error sending finish simulation to HIL")
+					errChan <- errStoping
+				}
+
+				if errReadJSON != nil {
+					errChan <- errReadJSON
+				} else {
+					stopChan <- struct{}{}
+				}
+				return
+			} else if !addOrderToChan(msg, orderChan) {
+				trace.Warn().Msg("It is not an order")
 			}
 
 		}
-	}()
+
+	}
 }
 
-func (hilHandler *HilHandler) startSendingOrders(orderChan <-chan models.Order, errChan chan<- error, ctx context.Context, done <-chan struct{}) {
-	go func() {
+func (hilHandler *HilHandler) startListeningData(dataChan chan<- models.VehicleState, errChan chan<- error, ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		default:
+			_, buf, err := hilHandler.hilConn.ReadMessage()
+			if err != nil {
+				trace.Error().Err(err).Msg("Error reading message from HIL")
+				errChan <- err
+				break
+			}
 
-		for {
-			select {
-			case <-done:
+			msg, err := hilHandler.parseHilMessage(buf)
+
+			if err != nil {
+				trace.Error().Err(err)
+				continue
+			}
+
+			switch typedMsg := msg.(type) {
+			case models.VehicleState:
+				dataChan <- typedMsg
+			case FinishSimulationHil:
 				return
-			case <-ctx.Done():
-				return
-			case order := <-orderChan:
-				encodedOrder := order.Bytes()
-				errMarshal := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, encodedOrder)
-				if errMarshal != nil {
-					trace.Error().Err(errMarshal).Msg("Error unmarshalling order")
-					errChan <- errMarshal
-					return
-				}
 			default:
+				trace.Error().Msg(fmt.Sprintf("hil message doesn't match with any type: %t", msg))
 			}
 
 		}
-	}()
+
+	}
+}
+
+func (hilHandler *HilHandler) parseHilMessage(msg []byte) (any, error) {
+	if string(msg) == FinishSimulationHilMsg {
+		return FinishSimulationHil{}, nil
+	}
+
+	id := getId(msg)
+	decoder, ok := hilHandler.decoders[id]
+
+	if !ok {
+		return nil, fmt.Errorf("no decoder for id %d", id)
+	}
+
+	data, err := decoder.Decode(bytes.NewReader(msg))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return data, nil
+}
+
+func (hilHandler *HilHandler) parseFrontMessage(msg []byte) (any, error) {
+	if string(msg) == StartSimulationMsg {
+		return StartSimulationFront{}, nil
+	} else {
+		return nil, errors.New("unrecognized front message")
+	}
+}
+
+func getId(msg []byte) Id {
+	return Id(binary.BigEndian.Uint16(msg))
+}
+
+func (hilHandler *HilHandler) startSendingOrders(orderChan <-chan models.Order, errChan chan<- error, ctx context.Context) {
+	for {
+		select {
+		case <-ctx.Done():
+			return
+		case order := <-orderChan:
+			encodedOrder := order.Bytes()
+			errMarshal := hilHandler.hilConn.WriteMessage(websocket.BinaryMessage, encodedOrder)
+			if errMarshal != nil {
+				trace.Error().Err(errMarshal).Msg("Error unmarshalling order")
+				errChan <- errMarshal
+				return
+			}
+		default:
+			time.Sleep(time.Millisecond * 100) // To avoid spinning loop
+		}
+
+	}
 }
 
 func prepareFormOrder(msg []byte, orderChan chan<- models.Order) error {
@@ -294,4 +332,8 @@ func addOrderToChan(msg []byte, orderChan chan<- models.Order) bool {
 	}
 	return true
 
+}
+
+func (hilHandler *HilHandler) AreConnectionsReady() bool {
+	return hilHandler.frontConn != nil && hilHandler.hilConn != nil
 }

@@ -41,20 +41,20 @@ func main() {
 			return
 		}
 
-		if remoteHost == config.Addresses.Frontend {
+		switch remoteHost {
+		case config.Addresses.Frontend:
 			hilHandler.SetFrontConn(conn)
-			frontMsg := fmt.Sprintf("Frontened connected: %v %v", hilHandler, conn.RemoteAddr())
+			frontMsg := fmt.Sprintf("Frontened connected: %v", conn.RemoteAddr())
 			trace.Info().Msg(frontMsg)
-
-		}
-
-		if remoteHost == config.Addresses.Hil {
+		case config.Addresses.Hil:
 			hilHandler.SetHilConn(conn)
-			hilMsg := fmt.Sprintf("HIL connected: %v %v", hilHandler, conn.RemoteAddr())
+			hilMsg := fmt.Sprintf("HIL connected: %v", conn.RemoteAddr())
 			trace.Info().Msg(hilMsg)
+		default:
+			trace.Warn().Str("host", conn.RemoteAddr().String()).Msg("unrecognized host")
 		}
 
-		if hilHandler.frontConn != nil && hilHandler.hilConn != nil {
+		if hilHandler.AreConnectionsReady() {
 			errReady := hilHandler.frontConn.WriteMessage(websocket.TextMessage, []byte("Back-end is ready!"))
 			if errReady != nil {
 				trace.Error().Err(errReady).Msg("Error sending ready message")
@@ -69,7 +69,6 @@ func main() {
 
 	trace.Info().Msg("Listening in " + config.Addresses.Server_addr + config.Path)
 	log.Fatal(http.ListenAndServe(config.Addresses.Server_addr, nil))
-
 }
 
 func getConfig(path string) Config {

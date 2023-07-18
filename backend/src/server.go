@@ -15,7 +15,6 @@ func NewServer() Server {
 	return Server{
 		handleConn: func(conn *websocket.Conn) {},
 	}
-
 }
 
 func (server *Server) SetConnHandler(handler func(conn *websocket.Conn)) {

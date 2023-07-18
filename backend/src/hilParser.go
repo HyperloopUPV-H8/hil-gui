@@ -10,23 +10,22 @@ import (
 	trace "github.com/rs/zerolog/log"
 )
 
-const VEHICLE_STATE_ID = 1
-const FRONT_ORDER_ID = 2
-const CONTROL_ORDER_ID = 3
+const FrontOrderId = 2
+const ControlOrderId = 3
 
-func Encode(data interface{}) []byte { //FIXME: For encode array of structs, order.Bytes implemented for adding always the prefix
+func Encode(data interface{}) []byte {
 	switch dataType := data.(type) {
 	case []models.VehicleState:
 		head := make([]byte, 2)
-		binary.LittleEndian.PutUint16(head, VEHICLE_STATE_ID)
+		binary.LittleEndian.PutUint16(head, VehicleStateId)
 		return Prepend(conversions.GetAllBytesFromVehiclesState(dataType), head...)
 	case []models.Order:
 		head := make([]byte, 2)
 		switch dataType[0].(type) {
 		case models.FormOrder:
-			binary.LittleEndian.PutUint16(head, FRONT_ORDER_ID)
+			binary.LittleEndian.PutUint16(head, FrontOrderId)
 		case models.ControlOrder:
-			binary.LittleEndian.PutUint16(head, CONTROL_ORDER_ID)
+			binary.LittleEndian.PutUint16(head, ControlOrderId)
 		default:
 			trace.Warn().Msg("Does NOT match any ORDER type")
 			return nil
@@ -40,14 +39,13 @@ func Encode(data interface{}) []byte { //FIXME: For encode array of structs, ord
 }
 
 func Decode(data []byte) (any, error) {
-
 	dataType := binary.LittleEndian.Uint16(data[0:2])
 	switch dataType {
-	case VEHICLE_STATE_ID:
+	case VehicleStateId:
 		return conversions.GetAllVehicleStates(data[2:])
-	case FRONT_ORDER_ID: //TODO: Not needed now
+	case FrontOrderId: //TODO: Not needed now
 		return nil, errors.New("Decode for this type of order not implemented")
-	case CONTROL_ORDER_ID:
+	case ControlOrderId:
 		return conversions.GetAllControlOrders(data[2:])
 	default:
 		trace.Warn().Msg("Does NOT match any type")

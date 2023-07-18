@@ -1,38 +1,11 @@
-{"level":"info","time":1688550508606071500,"caller":"hilMock.go:30","message":"IDLE"}
-{"level":"info","time":1688550517815436100,"caller":"hilMock.go:75","message":"Simulation state"}
-{"level":"info","time":1688550519876930400,"caller":"hilMock.go:151","message":"[{18.66 11.42 16.07 0.1 0 34.81 -0.11 -0.05 -0.07}]"}
-{"level":"info","time":1688550521887929500,"caller":"hilMock.go:151","message":"[{17.29 17.22 16.36 8.86 47 47.75 -0.12 0.14 0.08}]"}
-{"level":"info","time":1688550523891433200,"caller":"hilMock.go:151","message":"[{10.16 12.98 15.59 11.69 26 33.54 0.02 -0.09 -0.03}]"}
-{"level":"info","time":1688550525884928400,"caller":"hilMock.go:151","message":"[{15.28 20.36 21.3 9.1 0 45.22 0.07 -0.1 -0.07}]"}
-{"level":"info","time":1688550527884427000,"caller":"hilMock.go:151","message":"[{16.8 14.18 10.9 2.98 46 23.49 0.17 0.18 -0.06}]"}
-{"level":"info","time":1688550527923427000,"caller":"hilMock.go:128","message":"Control order: {1 true}"}
-{"level":"info","time":1688550529857927100,"caller":"hilMock.go:128","message":"Control order: {1 false}"}
-{"level":"info","time":1688550529883426700,"caller":"hilMock.go:151","message":"[{22.56 21.55 19.4 17.99 41 39.72 0.06 -0.16 0.07}]"}
-{"level":"info","time":1688550531883431700,"caller":"hilMock.go:151","message":"[{22.24 16.19 15.63 3.2800000000000002 98 45.63 0.02 0.05 0.09}]"}
-{"level":"info","time":1688550532047431100,"caller":"hilMock.go:128","message":"Control order: {3 true}"}
-{"level":"info","time":1688550533878927100,"caller":"hilMock.go:151","message":"[{19.74 19.5 20.41 11 84 37.59 0.02 0.12 0.15}]"}
-{"level":"info","time":1688550533930926900,"caller":"hilMock.go:128","message":"Control order: {3 false}"}
-{"level":"info","time":1688550535877929100,"caller":"hilMock.go:151","message":"[{20.03 11.25 20.25 6.59 81 32.03 0.02 0.19 0.1}]"}
-{"level":"info","time":1688550535988427000,"caller":"hilMock.go:128","message":"Control order: {4 true}"}
-{"level":"info","time":1688550537882927400,"caller":"hilMock.go:151","message":"[{12.15 10.83 10.63 12.09 16 59.59 0.17 0.03 0.03}]"}
-{"level":"info","time":1688550538258430700,"caller":"hilMock.go:128","message":"Control order: {4 false}"}
-{"level":"info","time":1688550539888429600,"caller":"hilMock.go:151","message":"[{19.49 18.8 19.78 10.13 58 27.65 -0.16 0.01 -0.16}]"}
-{"level":"info","time":1688550540048552200,"caller":"hilMock.go:128","message":"Control order: {0 true}"}
-{"level":"info","time":1688550541888050800,"caller":"hilMock.go:151","message":"[{15.32 14.14 15.54 15.51 4 22.52 0.06 0.08 0.05}]"}
-{"level":"info","time":1688550541960055600,"caller":"hilMock.go:128","message":"Control order: {0 false}"}
-{"level":"info","time":1688550543196551700,"caller":"hilMock.go:108","message":"Finish simulation"}
-{"level":"info","time":1688550543199551500,"caller":"hilMock.go:57","message":"IDLE"}
-{"level":"info","time":1688550549587550900,"caller":"hilMock.go:75","message":"Simulation state"}
-{"level":"info","time":1688550551024049200,"caller":"hilMock.go:128","message":"Control order: {0 true}"}
-{"level":"info","time":1688550551604051000,"caller":"hilMock.go:151","message":"[{19.83 15.34 16.22 10.4 62 49.33 0.13 0.08 -0.17}]"}
-{"level":"info","time":1688550553563051900,"caller":"hilMock.go:128","message":"Control order: {0 false}"}
-{"level":"info","time":1688550553598549700,"caller":"hilMock.go:151","message":"[{18.11 21.09 12.71 6.85 99 22.02 0.17 -0.16 0.06}]"}
-{"level":"info","time":1688550555602048000,"caller":"hilMock.go:151","message":"[{11.49 14.67 18.9 12.32 81 33.02 0.06 -0.03 -0.06}]"}
-{"level":"info","time":1688550555942048300,"caller":"hilMock.go:128","message":"Control order: {4 true}"}
-{"level":"info","time":1688550557238549400,"caller":"hilMock.go:128","message":"Control order: {4 false}"}
-{"level":"info","time":1688550557602048900,"caller":"hilMock.go:151","message":"[{17.77 19.73 15.51 1.72 20 59.85 0.13 -0.1 0.16}]"}
-{"level":"info","time":1688550559597554200,"caller":"hilMock.go:151","message":"[{18.63 15.63 15.01 1.07 85 49.99 0.13 -0.07 0.06}]"}
-{"level":"info","time":1688550559878055800,"caller":"hilMock.go:128","message":"Control order: {2 true}"}
-{"level":"info","time":1688550561196049400,"caller":"hilMock.go:108","message":"Finish simulation"}
-{"level":"info","time":1688550561198553800,"caller":"hilMock.go:57","message":"IDLE"}
-{"level":"error","error":"read tcp 127.0.0.2:52091->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1688550682536800300,"caller":"hilMock.go:42","message":"error receiving message in IDLE"}
+{"level":"info","time":1689335265809855689,"caller":"hilMock.go:30","message":"IDLE"}
+{"level":"info","time":1689335276609505263,"caller":"hilMock.go:75","message":"Simulation state"}
+{"level":"info","time":1689335278610816347,"caller":"hilMock.go:151","message":"[{12.49 13.75 12.86 14.04 55 28.12 -0.06 -0.06 0.11}]"}
+{"level":"info","time":1689335280610785867,"caller":"hilMock.go:151","message":"[{21.17 13.74 12.48 8.94 49 25.22 -0.17 -0.17 -0.06}]"}
+{"level":"info","time":1689335282610810119,"caller":"hilMock.go:151","message":"[{17.45 14.44 13.37 2.41 93 55.2 -0.14 0.19 0.02}]"}
+{"level":"info","time":1689335284610791322,"caller":"hilMock.go:151","message":"[{16.52 12.78 19.62 5.98 67 28.81 0.13 0.15 0.02}]"}
+{"level":"info","time":1689335286610868138,"caller":"hilMock.go:151","message":"[{20.88 16.11 17.96 16.02 43 31.41 0.18 0.16 -0.06}]"}
+{"level":"info","time":1689335288610777931,"caller":"hilMock.go:151","message":"[{20.81 12.62 19.31 0.56 38 57.52 -0.02 0.07 0.14}]"}
+{"level":"error","error":"websocket: close 1006 (abnormal closure): unexpected EOF","time":1689335290554057128,"caller":"hilMock.go:103","message":"Error reading message from back-end"}
+{"level":"info","time":1689335290554199908,"caller":"hilMock.go:57","message":"IDLE"}
+{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connect: connection refused","time":1689335290554341102,"caller":"main.go:28","message":"Error connecting WebSocket"}

@@ -42,7 +42,6 @@ func ConvertFloat64ToBytes(num float64) [8]byte {
 }
 
 func GetBytesFromVehicleState(vehicleState models.VehicleState) []byte {
-
 	buf1 := ConvertFloat64ToBytes(vehicleState.XDistance)
 	buf2 := ConvertFloat64ToBytes(vehicleState.YDistance)
 	buf3 := ConvertFloat64ToBytes(vehicleState.ZDistance)
