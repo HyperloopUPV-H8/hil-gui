@@ -28,7 +28,7 @@ export const Controls = ({
     enabled,
 }: Props) => {
     const [buttonsState, setButtonsState] = useState<PlayButtons>({
-        play: false,
+        play: false, //FIXME: put it false, changed because now IDLE not connected
         stop: false,
     });
 
@@ -51,8 +51,7 @@ export const Controls = ({
                     setButtonsState((prev) => {
                         const newPlay = !prev.play;
                         onSimulationClick({
-                            kind: "play",
-                            state: newPlay,
+                            kind: "START_SIMULATION",
                         });
                         console.log({
                             play: newPlay,
@@ -64,18 +63,18 @@ export const Controls = ({
                         };
                     })
                 }
-                onStop={() => () =>
+                onStop={() =>
                     setButtonsState((prev) => {
                         const newStop = !prev.stop;
                         onSimulationClick({
-                            kind: "stop",
-                            state: newStop,
+                            kind: "STOP_SIMULATION",
                         });
                         return {
                             play: !prev.play,
                             stop: newStop,
                         };
-                    })}
+                    })
+                }
             />
             <div className={style.section}>
                 <div className={style.title}>Controls</div>

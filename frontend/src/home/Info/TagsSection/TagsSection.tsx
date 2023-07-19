@@ -31,73 +31,82 @@ export function DataSection({ info }: Props) {
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "Default",
-                    name: "Default",
-                    safeRange: [0, 100],
-                    warningRange: [0, 100],
+                    id: "X-Distance",
+                    name: "X-Distance",
+                    safeRange: [0, 50],
+                    warningRange: [0, 50],
                     type: "uint8",
-                    units: "A",
-                    value: { average: 0, last: 0 },
+                    units: "mm",
+                    value: {
+                        average: Number(info.xDistance.toFixed(2)),
+                        last: Number(info.xDistance.toFixed(2)),
+                    },
                 }}
             />
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "Default",
-                    name: "Default",
-                    safeRange: [0, 100],
-                    warningRange: [0, 100],
+                    id: "Y-Distance",
+                    name: "Y-Distance",
+                    safeRange: [0, 50],
+                    warningRange: [0, 50],
                     type: "uint8",
-                    units: "A",
-                    value: { average: 0, last: 0 },
+                    units: "mm",
+                    value: {
+                        average: Number(info.yDistance.toFixed(2)),
+                        last: Number(info.yDistance.toFixed(2)),
+                    },
                 }}
             />
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "Default",
-                    name: "Default",
-                    safeRange: [0, 100],
-                    warningRange: [0, 100],
+                    id: "Z-Distance",
+                    name: "Z-Distance",
+                    safeRange: [0, 50],
+                    warningRange: [0, 50],
                     type: "uint8",
-                    units: "A",
-                    value: { average: 0, last: 0 },
+                    units: "mm",
+                    value: {
+                        average: Number(info.zDistance.toFixed(2)),
+                        last: Number(info.zDistance.toFixed(2)),
+                    },
                 }}
             />
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "Default",
-                    name: "Default",
-                    safeRange: [0, 100],
-                    warningRange: [0, 100],
+                    id: "X-Rotation",
+                    name: "X-Rotation",
+                    safeRange: [-1, 1],
+                    warningRange: [-1, 1],
                     type: "uint8",
-                    units: "A",
-                    value: { average: 0, last: 0 },
+                    units: "rad",
+                    value: { average: info.xRotation, last: info.xRotation },
                 }}
             />
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "Default",
-                    name: "Default",
-                    safeRange: [0, 100],
-                    warningRange: [0, 100],
+                    id: "Y-Rotation",
+                    name: "Y-Rotation",
+                    safeRange: [-5, 5],
+                    warningRange: [-5, 5],
                     type: "uint8",
-                    units: "A",
-                    value: { average: 0, last: 0 },
+                    units: "rad",
+                    value: { average: info.yRotation, last: info.yRotation },
                 }}
             />
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "Default",
-                    name: "Default",
-                    safeRange: [0, 100],
-                    warningRange: [0, 100],
+                    id: "Z-Rotation",
+                    name: "Z-Rotation",
+                    safeRange: [-5, 5],
+                    warningRange: [-5, 5],
                     type: "uint8",
-                    units: "A",
-                    value: { average: 0, last: 0 },
+                    units: "rad",
+                    value: { average: info.zRotation, last: info.zRotation },
                 }}
             />
         </div>

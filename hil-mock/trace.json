@@ -1,11 +1,3 @@
-{"level":"info","time":1689335265809855689,"caller":"hilMock.go:30","message":"IDLE"}
-{"level":"info","time":1689335276609505263,"caller":"hilMock.go:75","message":"Simulation state"}
-{"level":"info","time":1689335278610816347,"caller":"hilMock.go:151","message":"[{12.49 13.75 12.86 14.04 55 28.12 -0.06 -0.06 0.11}]"}
-{"level":"info","time":1689335280610785867,"caller":"hilMock.go:151","message":"[{21.17 13.74 12.48 8.94 49 25.22 -0.17 -0.17 -0.06}]"}
-{"level":"info","time":1689335282610810119,"caller":"hilMock.go:151","message":"[{17.45 14.44 13.37 2.41 93 55.2 -0.14 0.19 0.02}]"}
-{"level":"info","time":1689335284610791322,"caller":"hilMock.go:151","message":"[{16.52 12.78 19.62 5.98 67 28.81 0.13 0.15 0.02}]"}
-{"level":"info","time":1689335286610868138,"caller":"hilMock.go:151","message":"[{20.88 16.11 17.96 16.02 43 31.41 0.18 0.16 -0.06}]"}
-{"level":"info","time":1689335288610777931,"caller":"hilMock.go:151","message":"[{20.81 12.62 19.31 0.56 38 57.52 -0.02 0.07 0.14}]"}
-{"level":"error","error":"websocket: close 1006 (abnormal closure): unexpected EOF","time":1689335290554057128,"caller":"hilMock.go:103","message":"Error reading message from back-end"}
-{"level":"info","time":1689335290554199908,"caller":"hilMock.go:57","message":"IDLE"}
-{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connect: connection refused","time":1689335290554341102,"caller":"main.go:28","message":"Error connecting WebSocket"}
+{"level":"info","time":1689760108417776800,"caller":"hilMock.go:30","message":"IDLE"}
+{"level":"error","error":"read tcp 127.0.0.2:65177->127.0.0.1:8010: wsarecv: An existing connection was forcibly closed by the remote host.","time":1689761328733430200,"caller":"hilMock.go:42","message":"error receiving message in IDLE"}
+{"level":"error","error":"dial tcp 127.0.0.2:0->127.0.0.1:8010: connectex: No connection could be made because the target machine actively refused it.","time":1689761330778830800,"caller":"main.go:28","message":"Error connecting WebSocket"}
