@@ -288,7 +288,7 @@ func (hilHandler *HilHandler) parseFrontMessage(msg []byte) (any, error) {
 	// 	return nil, errors.New("unrecognized front message")
 	// }
 	var backendMessage BackendMessage
-	err := json.Unmarshal(msg, backendMessage)
+	err := json.Unmarshal(msg, &backendMessage)
 	if err != nil {
 		return nil, errors.New("error unmarshalling front message")
 	}
@@ -296,7 +296,7 @@ func (hilHandler *HilHandler) parseFrontMessage(msg []byte) (any, error) {
 	switch backendMessage.Type {
 	case "control_order":
 		var controlOrder models.ControlOrder
-		err := json.Unmarshal(backendMessage.Payload, controlOrder)
+		err := json.Unmarshal(backendMessage.Payload, &controlOrder)
 		if err != nil {
 			return nil, errors.New("error unmarshalling front control order")
 		}

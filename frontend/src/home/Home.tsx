@@ -8,9 +8,16 @@ import { Controls } from "./Controls/Controls";
 import { Info } from "./Info/Info";
 import { VehicleState } from "models/vehicle";
 import { useBackend } from "./useBackend";
+import { createControlMessage, createSimMessage } from "messages";
 
 const START_SIMULATION = "start_simulation";
 const FINISH_SIMULTATION = "finish_simulation";
+
+const eventKindToNumericId = {
+    levitate: 0,
+    accelerate: 1,
+    brake: 2,
+};
 
 export const Home = () => {
     const [vehicleState, setVehicleState] = useState<VehicleState>({
@@ -47,36 +54,33 @@ export const Home = () => {
                 <Controls
                     enabled={simulationStarted}
                     onControlClick={(ev) => {
-                        let numericId = -1;
-                        switch (ev.kind) {
-                            case "levitate":
-                                numericId = 0;
-                                break;
-                            case "accelerate":
-                                numericId = 1;
-                                break;
-                            case "brake":
-                                numericId = 2;
-                                break;
+                        const id = eventKindToNumericId[ev.kind];
+                        if (id === undefined) {
+                            console.warn(`unrecognized event kind ${ev.kind}`);
+                            return;
                         }
-                        const controlOrder: ControlOrder = {
-                            id: numericId,
-                            state: ev.state,
-                        };
-                        sendJsonMessage(controlOrder);
+
+                        sendJsonMessage(
+                            createControlMessage({
+                                id: id,
+                                state: ev.state,
+                            })
+                        );
                     }}
                     onPerturbationClick={(ev) => {
                         sendJsonMessage(ev);
                     }}
                     onSimulationClick={(ev) => {
-                        sendPlayButtonEvent(ev, sendMessage);
-                        if (ev.kind == "play" && !ev.state) {
-                            setFirstSimulation(true);
-                            setSimulationStarted(true);
-                        }
-                        //FIXME: when stop simulation, freeze the graphics
-                        else if (ev.kind == "stop" && !ev.state) {
-                            setSimulationStarted(false);
+                        switch (ev.kind) {
+                            case "START_SIMULATION":
+                                sendJsonMessage(createSimMessage());
+                                setFirstSimulation(true);
+                                setSimulationStarted(true);
+                                break;
+                            case "STOP_SIMULATION":
+                                sendJsonMessage(createSimMessage());
+                                setSimulationStarted(false);
+                                break;
                         }
                     }}
                     lastMessage={lastMessage}
@@ -86,22 +90,6 @@ export const Home = () => {
         </main>
     );
 };
-
-function sendPlayButtonEvent(
-    ev: SimulationEvent,
-    sendMessage: SendMessage | undefined
-) {
-    switch (ev.kind) {
-        case "play":
-            console.log(START_SIMULATION);
-            sendMsgSimultation(sendMessage!, START_SIMULATION);
-            break;
-        case "stop":
-            console.log(FINISH_SIMULTATION);
-            sendMsgSimultation(sendMessage!, FINISH_SIMULTATION);
-            break;
-    }
-}
 
 function sendMsgSimultation(sendMessage: SendMessage, msg: string) {
     const message: WebSocketMessage = msg;
