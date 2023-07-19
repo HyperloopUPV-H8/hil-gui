@@ -24,9 +24,9 @@ function firstSimVehicleState(): VehicleState {
         xDistance: Number((Math.random() * 4 + 10).toFixed(2)),
         yDistance: Number((Math.random() * 6 + 10).toFixed(2)),
         zDistance: Number((Math.random() * 4 + 10).toFixed(2)),
-        current: Number((Math.random() * 20).toFixed(2)),
-        duty: Math.floor(Math.random() * 20 + 15),
-        temperature: Number((Math.random() * 40 + 20).toFixed(2)),
+        current: Number((Math.random() * 3 + 5).toFixed(2)),
+        duty: Math.floor(Math.random() * 10 + 15),
+        temperature: Number((Math.random() * 20 + 20).toFixed(2)),
         xRotation: Number(((Math.random() - 0.5) * (Math.PI / 16)).toFixed(2)),
         yRotation: Number(((Math.random() - 0.5) * (Math.PI / 16)).toFixed(2)),
         zRotation: Number(((Math.random() - 0.5) * (Math.PI / 16)).toFixed(2)),
@@ -117,7 +117,7 @@ export const Home = () => {
                 setVehicleState(newVehicleState);
 
                 // }
-            }, 2000);
+            }, 1000);
             setCustomInterval(interval);
         }
         //return () => clearInterval(customInterval);

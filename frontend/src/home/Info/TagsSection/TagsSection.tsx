@@ -15,7 +15,7 @@ export function DataSection({ info }: Props) {
             <GaugeTag
                 name="Current"
                 units="Amp"
-                max={100}
+                max={50}
                 min={0}
                 strokeWidth={GAUGE_WIDTH}
                 value={info.current}

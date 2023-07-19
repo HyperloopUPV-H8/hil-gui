@@ -1,2 +1,6 @@
-{"level":"info","time":1689767408662940700,"caller":"main.go:70","message":"Listening in 127.0.0.1:8010/backend"}
-{"level":"info","time":1689767409464551300,"caller":"main.go:48","message":"Frontened connected: 127.0.0.1:62368"}
+{"level":"info","time":1689768351430918200,"caller":"main.go:70","message":"Listening in 127.0.0.1:8010/backend"}
+{"level":"info","time":1689768354326544000,"caller":"main.go:48","message":"Frontened connected: 127.0.0.1:62565"}
+{"level":"info","time":1689768364103805900,"caller":"main.go:48","message":"Frontened connected: 127.0.0.1:62573"}
+{"level":"info","time":1689768364113991600,"caller":"main.go:48","message":"Frontened connected: 127.0.0.1:62574"}
+{"level":"info","time":1689768524361113000,"caller":"main.go:48","message":"Frontened connected: 127.0.0.1:62597"}
+{"level":"info","time":1689768524368703800,"caller":"main.go:48","message":"Frontened connected: 127.0.0.1:62598"}
