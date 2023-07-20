@@ -21,15 +21,15 @@ const eventKindToNumericId = {
 
 function firstSimVehicleState(): VehicleState {
     const vehicleState: VehicleState = {
-        xDistance: Number((Math.random() * 4 + 10).toFixed(2)),
-        yDistance: Number((Math.random() * 6 + 10).toFixed(2)),
-        zDistance: Number((Math.random() * 4 + 10).toFixed(2)),
-        current: Number((Math.random() * 3 + 5).toFixed(2)),
-        duty: Math.floor(Math.random() * 10 + 15),
-        temperature: Number((Math.random() * 20 + 20).toFixed(2)),
-        xRotation: Number(((Math.random() - 0.5) * (Math.PI / 16)).toFixed(2)),
-        yRotation: Number(((Math.random() - 0.5) * (Math.PI / 16)).toFixed(2)),
-        zRotation: Number(((Math.random() - 0.5) * (Math.PI / 16)).toFixed(2)),
+        xDistance: Number((Math.random() * 0.5 + 19).toFixed(2)),
+        yDistance: Number((Math.random() * 0.5 + 0).toFixed(2)),
+        zDistance: Number((Math.random() * 0.5 + 19).toFixed(2)),
+        current: Number((Math.random() * 1 + 3).toFixed(2)),
+        duty: Number((Math.random() * 1 + 15).toFixed(2)),
+        temperature: 20.3,
+        xRotation: Number(((Math.random() - 0.5) * (Math.PI / 32)).toFixed(2)),
+        yRotation: Number(((Math.random() - 0.5) * (Math.PI / 32)).toFixed(2)),
+        zRotation: Number(((Math.random() - 0.5) * (Math.PI / 32)).toFixed(2)),
     };
     console.log(vehicleState);
     return vehicleState;
@@ -117,7 +117,7 @@ export const Home = () => {
                 setVehicleState(newVehicleState);
 
                 // }
-            }, 1000);
+            }, 250);
             setCustomInterval(interval);
         }
         //return () => clearInterval(customInterval);

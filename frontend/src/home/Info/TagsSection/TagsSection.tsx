@@ -31,15 +31,15 @@ export function DataSection({ info }: Props) {
             <BarTag
                 barType="range"
                 measurement={{
-                    id: "X-Distance",
-                    name: "X-Distance",
+                    id: "Temperature",
+                    name: "Temperature",
                     safeRange: [0, 50],
                     warningRange: [0, 50],
                     type: "uint8",
-                    units: "mm",
+                    units: "°C",
                     value: {
-                        average: Number(info.xDistance.toFixed(2)),
-                        last: Number(info.xDistance.toFixed(2)),
+                        average: Number(info.temperature.toFixed(2)),
+                        last: Number(info.temperature.toFixed(2)),
                     },
                 }}
             />

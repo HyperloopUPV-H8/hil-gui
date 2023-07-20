@@ -62,7 +62,7 @@ function getRange(attribute: string): [number | null, number | null] {
         case attribute.endsWith("Distance"):
             return [0, 30];
         default:
-            return [0, 100];
+            return [0, 50];
     }
 }
 
@@ -84,14 +84,8 @@ export function ChartSection({ info, isLoading }: Props) {
         <div className={styles.chartSection}>
             {Object.entries(lineDescArray).map(([name, lineDesc]) => {
                 return (
-                    <div
-                        key={name}
-                        className={styles.chart}
-                    >
-                        <LoadableChart
-                            isLoading={false}
-                            line={lineDesc}
-                        />
+                    <div key={name} className={styles.chart}>
+                        <LoadableChart isLoading={false} line={lineDesc} />
                         <div className={styles.legend}>{lineDesc.name}</div>
                     </div>
                 );

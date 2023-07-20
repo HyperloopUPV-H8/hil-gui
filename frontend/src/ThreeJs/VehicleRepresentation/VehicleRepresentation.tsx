@@ -1,27 +1,32 @@
 import { animated, useSpring } from "@react-spring/three";
 import { useGLTF } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { VehicleState } from "App";
+import { VehicleState } from "models/vehicle";
+//import { VehicleState } from "App";
 import { useEffect, useRef } from "react";
 import { Mesh } from "three";
 
-const MAX_YDISTANCE = 22;
-const MIN_YDISTANCE = 10;
+const MAX_YDISTANCE = 25; //22;
+const MIN_YDISTANCE = 15;
 const MAX_CANVAS_X = 3;
 
 type Props = {
     info: VehicleState;
 };
 
-function calculatePositionDistance(yDistance: number) {
-    if (yDistance >= 10) {
+function calculatePositionDistance(distance: number) {
+    if (distance >= 10) {
         return (
-            ((yDistance - MIN_YDISTANCE) * MAX_CANVAS_X) /
+            ((distance - MIN_YDISTANCE) * MAX_CANVAS_X) /
             (MAX_YDISTANCE - MIN_YDISTANCE)
         );
     } else {
         return 0;
     }
+}
+
+function calculatePositionYDistance(yDistance: number) {
+    return ((yDistance - 0 + 1) * MAX_CANVAS_X) / (5 - 0);
 }
 
 export function VehicleRepresentation({ info }: Props) {
@@ -32,7 +37,7 @@ export function VehicleRepresentation({ info }: Props) {
 
     const [springProps, setSpringProps] = useSpring(() => ({
         positionX: calculatePositionDistance(info.xDistance),
-        positionY: calculatePositionDistance(info.yDistance),
+        positionY: calculatePositionYDistance(info.yDistance),
         positionZ: calculatePositionDistance(info.zDistance),
         rotationX: info.xRotation,
         rotationY: info.yRotation,
@@ -48,7 +53,7 @@ export function VehicleRepresentation({ info }: Props) {
     useEffect(() => {
         valueRef.current = info;
         valueRef.current.xDistance = calculatePositionDistance(info.xDistance);
-        valueRef.current.yDistance = calculatePositionDistance(info.yDistance);
+        valueRef.current.yDistance = calculatePositionYDistance(info.yDistance);
         valueRef.current.zDistance = calculatePositionDistance(info.zDistance);
 
         setSpringProps({
